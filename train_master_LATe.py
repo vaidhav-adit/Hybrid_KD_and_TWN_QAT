@@ -948,6 +948,7 @@ def run_single_baseline(mode, args, train_loader, val_loader, test_loader, ce_cr
     elif mode == "baseline2":
         epochs_stage1 = args.epochs // 2
         epochs_stage2 = args.epochs - epochs_stage1
+        stage2_lr = args.stage2_lr if args.stage2_lr is not None else args.base_lr
 
         # Stage 1: FP32 KD Pretraining
         print(f"\n--- Baseline 2 Stage 1: FP32 KD Pretraining ({epochs_stage1} epochs) ---")
@@ -960,7 +961,7 @@ def run_single_baseline(mode, args, train_loader, val_loader, test_loader, ce_cr
         )
         scaler1 = GradScaler(enabled=args.amp)
         best_val_acc_s1 = 0.0
-        stage1_ckpt = f"late_baseline2_stage1_fp32{temp_tag}_best.pth"
+        stage1_ckpt = f"late_baseline2_stage1_fp32{temp_tag}{fnl_tag}_best.pth"
 
         history_s1 = {"train_loss": [], "train_acc": [], "val_loss": [], "val_acc": [], "test_loss": [], "test_acc": []}
 
@@ -999,13 +1000,13 @@ def run_single_baseline(mode, args, train_loader, val_loader, test_loader, ce_cr
                   f"test {te_loss:.4f}/{te_acc:.2f}% | {time.time()-t0:.1f}s")
 
         # Stage 2: Convert to LATe & Fine-tune with KD
-        print(f"\n--- Baseline 2 Stage 2: LATe QAT Fine-tuning ({epochs_stage2} epochs) ---")
+        print(f"\n--- Baseline 2 Stage 2: LATe QAT Fine-tuning ({epochs_stage2} epochs, lr={stage2_lr}) ---")
         model = LATeResNet18(args.num_classes, curvature_beta=args.curvature_beta,
                              quantize_first_last=args.quantize_first_last).to(device)
         model.load_state_dict(torch.load(stage1_ckpt, map_location=device), strict=False)
 
         opt2, sched2 = build_optimizer_and_scheduler(
-            model, base_lr=args.base_lr, momentum=args.momentum,
+            model, base_lr=stage2_lr, momentum=args.momentum,
             nesterov=args.nesterov, weight_decay=args.weight_decay,
             warmup_epochs=args.warmup_epochs, total_epochs=epochs_stage2,
             steps_per_epoch=len(train_loader)
@@ -1051,9 +1052,10 @@ def run_single_baseline(mode, args, train_loader, val_loader, test_loader, ce_cr
         torch.save(model.state_dict(), ckpt_final)
         combined_history = {k: history_s1[k] + history_s2[k] for k in history_s1}
         plot_and_save_curves(combined_history, f"late_{mode}{temp_tag}{fnl_tag}_curves.png", title_prefix=f"LATe {mode.upper()}{temp_tag}{fnl_tag}")
-        plot_and_save_histograms(model, f"late_{mode}{temp_tag}{fnl_tag}_histograms.png", title_suffix=f"(LATe {mode}{temp_tag}{fnl_tag})")
 
         model.load_state_dict(torch.load(ckpt_best, map_location=device))
+        plot_and_save_histograms(model, f"late_{mode}{temp_tag}{fnl_tag}_histograms.png", title_suffix=f"(LATe {mode}{temp_tag}{fnl_tag})")
+
         final_test_loss, final_test_acc = evaluate_model(model, test_loader, device, ce_criterion, teacher=teacher,
                                                          kd_temp=args.kd_temperature, kd_lam=args.kd_lambda, amp=args.amp)
         print(f"\nFinal Best LATe Checkpoint Test Accuracy: {final_test_acc:.2f}% (Loss: {final_test_loss:.4f})")
@@ -1132,9 +1134,10 @@ def run_single_baseline(mode, args, train_loader, val_loader, test_loader, ce_cr
     print(f"\nLATe {mode.upper()} Training Complete in {total_time/3600:.2f} hours. Best Val Acc: {best_val_acc:.2f}% (Saved: {ckpt_best})")
 
     plot_and_save_curves(history, f"late_{mode}{temp_tag}{fnl_tag}_curves.png", title_prefix=f"LATe {mode.upper()}{temp_tag}{fnl_tag}")
-    plot_and_save_histograms(model, f"late_{mode}{temp_tag}{fnl_tag}_histograms.png", title_suffix=f"(LATe {mode}{temp_tag}{fnl_tag})")
 
     model.load_state_dict(torch.load(ckpt_best, map_location=device))
+    plot_and_save_histograms(model, f"late_{mode}{temp_tag}{fnl_tag}_histograms.png", title_suffix=f"(LATe {mode}{temp_tag}{fnl_tag})")
+
     final_test_loss, final_test_acc = evaluate_model(model, test_loader, device, ce_criterion, teacher=teacher,
                                                      kd_temp=args.kd_temperature, kd_lam=args.kd_lambda, amp=args.amp)
     print(f"\nFinal Best LATe Checkpoint Test Accuracy: {final_test_acc:.2f}% (Loss: {final_test_loss:.4f})")
@@ -1222,6 +1225,8 @@ def main():
                         help="Training batch size (default: 128).")
     parser.add_argument("--base_lr", type=float, default=0.1,
                         help="Initial base learning rate (default: 0.1).")
+    parser.add_argument("--stage2_lr", type=float, default=None,
+                        help="Base learning rate for Baseline 2 Stage 2 fine-tuning (default: None, i.e., uses base_lr).")
     parser.add_argument("--momentum", type=float, default=0.9,
                         help="SGD momentum (default: 0.9).")
     parser.add_argument("--no_nesterov", dest="nesterov", action="store_false", default=True,

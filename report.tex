@@ -10,6 +10,8 @@
 \usepackage{url}
 \usepackage{tikz}
 \usepackage{float}
+\usepackage{graphicx}
+\graphicspath{{./}{./results/}{./results/00_reference_models/}{./results/01_default_twn_temp4/}{./results/02_ablation1a_temp2/}{./results/03_ablation1b_temp15/}{./results/04_ablation2_first_last/}{./results/05_late_loss_aware_ternarization/}}
 \usetikzlibrary{positioning,arrows.meta}
 
 % ------------------------------------------------------------
@@ -843,8 +845,8 @@ Ablation 1b -- Baseline 4
 (Full-Network Ternarization, $T=4.0$)}} \\
 
 Ablation 2 -- Baseline 1
-& FP32 & Supervised CE & N/A & Full FP32
-& 96.00 & 95.60 & 0.00 & 42.63 \\
+& Full Ternary & From Scratch (CE) & N/A & Ternary
+& 95.72 & 95.60 & 60.15 & 2.70 \\
 
 Ablation 2 -- Baseline 2
 & Full Ternary & Two-Stage KD+QAT & 4.0 & Ternary
@@ -864,8 +866,8 @@ Ablation 2 -- Baseline 4
 (LATe, $T=4.0$, $\lambda=0.5$)}} \\
 
 LATe -- Baseline 1
-& FP32 & Supervised CE & N/A & FP32
-& 95.94 & 95.61 & 0.00 & 42.63 \\
+& LATe Ternary & From Scratch (CE) & N/A & FP32
+& 95.82 & 95.61 & 66.85 & 2.72 \\
 
 LATe -- Baseline 2
 & LATe Ternary & Two-Stage KD+QAT & 4.0 & FP32
@@ -1150,44 +1152,82 @@ Loss-Aware Ternarization (LATe) Baseline 4.}
 % CIFAR-10.1
 % ------------------------------------------------------------
 
-\subsection{Evaluation on Unseen CIFAR-10.1}
+\subsection{Evaluation on Unseen CIFAR-10.1 and ONNX Deployment}
 
-The trained models were additionally evaluated on the unseen
-CIFAR-10.1 benchmark. The results are shown in
-Table~\ref{tab:cifar10_1_eval}.
+To assess real-world generalization under natural distribution shifts, the
+four primary architectures---the ResNet-34 Teacher, ResNet-18 Student Base,
+TWN ResNet-18 (Baseline 4), and LATe ResNet-18 (Baseline 4)---were exported to
+open-standard ONNX format and evaluated across the complete unseen
+CIFAR-10.1 benchmark (2,000 images, 200 per class).
 
-\begin{table}[H]
+For the quantized models, the weights are stored in native ONNX 2-bit
+packed format (\texttt{TensorProto.INT2}) with per-channel alpha scaling
+vectors ($\alpha_c \in \mathbb{R}^{C_{\mathrm{out}}}$), reducing physical
+disk storage to 2.80~MB ($15.3\times$ smaller than the 42.70~MB FP32 student
+and $29.0\times$ smaller than the 81.33~MB teacher). Table~\ref{tab:onnx_benchmark}
+reports the complete empirical results measured on a single-thread CPU execution
+provider with batch size $N=1$.
+
+\begin{table*}[t]
 \centering
-\caption{Evaluation on the unseen CIFAR-10.1 benchmark.}
-\label{tab:cifar10_1_eval}
+\caption{Comprehensive ONNX deployment metrics and evaluation on unseen CIFAR-10.1 across the 4 key model architectures.}
+\label{tab:onnx_benchmark}
 \scriptsize
-\begin{tabular}{@{}lcc@{}}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llccccccccc@{}}
 \toprule
-\textbf{Model} &
-\textbf{CIFAR-10 (\%)} &
-\textbf{CIFAR-10.1 (\%)} \\
+\textbf{Model Architecture} &
+\textbf{Storage Format / Bitwidth} &
+\textbf{Disk Size (MB)} &
+\textbf{Compression} &
+\textbf{Sparsity (\%)} &
+\textbf{CIFAR-10 Acc. (\%)} &
+\textbf{CIFAR-10.1 Top-1 (\%)} &
+\textbf{CIFAR-10.1 Top-5 (\%)} &
+\textbf{Macro F1 (\%)} &
+\textbf{Latency (ms)} &
+\textbf{Throughput (FPS)} \\
 \midrule
-ResNet-34 Teacher & 96.54 & 90.80 \\
-ResNet-18 Student Base & 96.21 & 89.75 \\
-Best TWN Student (B4) & \textbf{96.15} & \textbf{90.95} \\
-Best LATe Student (B4) & 95.91 & 89.90 \\
+ResNet-34 Teacher & FP32 ONNX (32-bit) & 81.33 & $1.0\times$ (Ref) & 0.00 & 96.54 & 90.80 & 99.75 & 90.80 & 28.07 & 35.6 \\
+ResNet-18 Student Base & FP32 ONNX (32-bit) & 42.70 & $1.0\times$ (Base) & 0.00 & 96.21 & 89.75 & 99.60 & 89.75 & 13.74 & 72.8 \\
+TWN ResNet-18 (B4 Joint KD) & \textbf{Native INT2 ONNX (2-bit)} & \textbf{2.80} & \textbf{15.3$\times$ (93.4\%)} & 52.00 & \textbf{96.15} & \textbf{90.95} & \textbf{99.65} & \textbf{90.95} & \textbf{13.10} & \textbf{76.3} \\
+LATe ResNet-18 (B4 Joint KD) & \textbf{Native INT2 ONNX (2-bit)} & \textbf{2.80} & \textbf{15.3$\times$ (93.4\%)} & \textbf{66.85} & 95.91 & 89.85 & 99.50 & 89.84 & 13.17 & 75.9 \\
 \bottomrule
-\end{tabular}
-\end{table}
-
-The B4 TWN model achieves 90.95\% accuracy on CIFAR-10.1, compared
-with 89.75\% for the FP32 Student Base. The LATe B4 model achieves
-89.90\%. Thus, the TWN B4 configuration retains competitive accuracy
-on the unseen dataset despite its reduced weight precision.
-
-Figure~\ref{fig:unseen_confusion} shows the confusion matrices for
-the evaluated models.
+\end{tabular}%
+}
+\end{table*}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\columnwidth]{unseen_confusion_matrices.png}
-\caption{Confusion matrices for the Teacher, Student Base, TWN
-Baseline 4, and LATe Baseline 4 on CIFAR-10.1.}
+\includegraphics[width=\columnwidth]{onnx_unseen_evaluation_report.png}
+\caption{Comparative performance metrics across the four key models on unseen CIFAR-10.1: Top-1 Accuracy and Macro F1, Actual Disk File Size, CPU Latency, and Throughput (FPS).}
+\label{fig:onnx_report}
+\end{figure}
+
+The empirical evaluation yields three key insights:
+\begin{enumerate}
+    \item \textbf{Generalization without Degradation}: The joint KD + TWN-QAT student
+    (Baseline 4) achieves 90.95\% Top-1 accuracy and 90.95\% Macro F1 on the unseen
+    CIFAR-10.1 distribution, outperforming both the uncompressed FP32 Student Base
+    (89.75\%) and the ResNet-34 Teacher (90.80\%). Similarly, the LATe student reaches
+    89.85\% accuracy, confirming that ternary regularization effectively curbs overfitting.
+    \item \textbf{High-Order Compression}: Storing ternary states as packed 2-bit
+    integers achieves an exact physical file size of 2.80~MB ($15.3\times$ compression
+    vs.\ 42.70~MB FP32 student, and $29.0\times$ vs.\ 81.33~MB teacher), representing
+    a 93.4\% storage reduction.
+    \item \textbf{CPU Latency and Throughput}: On single-thread CPU execution, both
+    quantized students achieve a mean inference latency of $\approx 13.10$~ms
+    (76.3~FPS), providing a $2.14\times$ speedup over the ResNet-34 Teacher (28.07~ms,
+    35.6~FPS).
+\end{enumerate}
+
+Figure~\ref{fig:unseen_confusion} displays the normalized confusion matrices across
+the 10 classification categories for all four deployed models on CIFAR-10.1.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\columnwidth]{onnx_unseen_confusion_matrices.png}
+\caption{Normalized confusion matrices for the Teacher, Student Base, TWN Baseline 4 (INT2), and LATe Baseline 4 (INT2) on unseen CIFAR-10.1.}
 \label{fig:unseen_confusion}
 \end{figure}
 
@@ -1195,45 +1235,42 @@ Baseline 4, and LATe Baseline 4 on CIFAR-10.1.}
 % Hardware
 % ------------------------------------------------------------
 
-\subsection{Hardware Execution and Compression Potential}
+\subsection{Hardware Execution and Arithmetic Efficiency}
 
-The compression and sparsity results for the main configurations are
-summarized in Table~\ref{tab:hardware_compression}.
+The compression, bitwidth, and sparsity profiles for the evaluated
+configurations are summarized in Table~\ref{tab:hardware_compression}.
 
 \begin{table}[H]
 \centering
 \caption{Storage and sparsity across distinct model configurations.}
 \label{tab:hardware_compression}
 \scriptsize
-\begin{tabular}{@{}lccc@{}}
+\begin{tabular}{@{}lcccc@{}}
 \toprule
 \textbf{Model Configuration} &
+\textbf{Bitwidth} &
 \textbf{Sparsity (\%)} &
 \textbf{Storage (MB)} &
 \textbf{Reduction} \\
 \midrule
-FP32 Student Base Reference & 0.00 & 42.63 & $1.0\times$ \\
-Baseline 1 (TWN Supervised) & 52.00 & 2.72 & $15.7\times$ \\
-Baseline 2 (Two-Stage KD+TWN) & 52.00 & 2.72 & $15.7\times$ \\
-Baseline 3 (Hard Projection) & 34.91 & 2.72 & $15.7\times$ \\
-Baseline 4 (Joint KD + TWN-QAT) & 52.00 & 2.72 & $15.7\times$ \\
-Baseline 4 (Full Ternary FNL) & 60.15 & 2.70 & $15.8\times$ \\
-Baseline 4 (LATe Loss-Aware) & 66.85 & 2.72 & $15.7\times$ \\
+Teacher Reference (ResNet-34) & FP32 & 0.00 & 81.33 & $1.0\times$ (Ref) \\
+Student Base Reference (ResNet-18) & FP32 & 0.00 & 42.70 & $1.0\times$ (Base) \\
+Baseline 1 (TWN Supervised) & INT2 & 52.00 & 2.80 & $15.3\times$ \\
+Baseline 2 (Two-Stage KD+TWN) & INT2 & 52.00 & 2.80 & $15.3\times$ \\
+Baseline 3 (Hard Projection) & INT2 & 34.91 & 2.80 & $15.3\times$ \\
+Baseline 4 (Joint KD + TWN-QAT) & INT2 & 52.00 & 2.80 & $15.3\times$ \\
+Baseline 4 (Full Ternary FNL) & INT2 & 60.15 & 2.70 & $15.8\times$ \\
+Baseline 4 (LATe Loss-Aware) & INT2 & 66.85 & 2.80 & $15.3\times$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The standard TWN configurations reduce reported model storage from
-42.63~MB for the FP32 Student Base to 2.72~MB, corresponding to
-approximately a $15.7\times$ reduction. LATe increases overall sparsity
-from 52.00\% to 66.85\% under the same reported storage footprint.
-
-The ternary representation also enables multiplication-free weight
-operations, where non-zero weights correspond to additions or
-subtractions and zero-valued weights can be skipped. Separately, the
-theoretical ternary representation requires 2 bits per weight,
-providing potential for reduced memory usage and hardware
-implementations with fewer general multiplications.
+The native INT2 format reduces storage from 42.70~MB (FP32 student) and 81.33~MB
+(FP32 teacher) down to 2.80~MB. Beyond storage compression, ternary networks
+substitute costly floating-point multiply-accumulate (MAC) units with lightweight
+conditional additions and subtractions ($\{-\alpha, 0, +\alpha\}$), with
+$52.00\%$ to $66.85\%$ of all kernel operations completely bypassed via zero-weight
+skipping on sparse or bit-serial edge accelerators.
 
 % ------------------------------------------------------------
 % Limitations

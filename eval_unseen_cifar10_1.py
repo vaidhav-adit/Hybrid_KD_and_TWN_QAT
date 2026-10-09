@@ -1,12 +1,12 @@
 """
 Evaluation Script for Unseen CIFAR-10.1 Dataset.
 Evaluates Teacher, FP32 Student Base, Best TWN Student, and Best LATe Student
-on a balanced unseen dataset (10 images per class = 100 images total).
+on the full unseen CIFAR-10.1 benchmark (200 images per class = 2,000 images total) or custom subsets.
 Saves sample visualizations (2 images per class) and generates Confusion Matrices.
 
 Usage:
   python eval_unseen_cifar10_1.py
-  python eval_unseen_cifar10_1.py --twn_student_ckpt baseline4_temp4_best.pth --late_student_ckpt late_baseline4_temp4_best.pth
+  python eval_unseen_cifar10_1.py --twn_student_ckpt results/01_default_twn_temp4/baseline4_temp4_best.pth --late_student_ckpt results/05_late_loss_aware_ternarization/late_baseline4_temp4_best.pth
 """
 
 import os
@@ -56,7 +56,7 @@ class CIFAR10_1_Dataset(Dataset):
         return img, label
 
 
-def load_cifar10_1_subset(data_dir="./data/cifar10_1", samples_per_class=10, seed=42):
+def load_cifar10_1_subset(data_dir="./data/cifar10_1", samples_per_class=200, seed=42):
     os.makedirs(data_dir, exist_ok=True)
     data_path = os.path.join(data_dir, "cifar10.1_v6_data.npy")
     labels_path = os.path.join(data_dir, "cifar10.1_v6_labels.npy")
@@ -77,7 +77,8 @@ def load_cifar10_1_subset(data_dir="./data/cifar10_1", samples_per_class=10, see
 
     for c in range(10):
         c_indices = np.where(all_labels == c)[0]
-        chosen = np.random.choice(c_indices, size=samples_per_class, replace=False)
+        actual_samples = min(samples_per_class, len(c_indices))
+        chosen = np.random.choice(c_indices, size=actual_samples, replace=False)
         selected_indices.extend(chosen)
 
     selected_indices = np.array(selected_indices)
@@ -611,12 +612,22 @@ def plot_combined_confusion_matrices(cm_dict, out_path="unseen_confusion_matrice
 # 5. Main Execution Loop
 # ==============================================================================
 
+def resolve_checkpoint(path_str, fallback_paths=None):
+    if path_str and os.path.exists(path_str):
+        return path_str
+    if fallback_paths:
+        for p in fallback_paths:
+            if p and os.path.exists(p):
+                return p
+    return path_str
+
+
 def main():
     parser = argparse.ArgumentParser(description="Evaluate CIFAR-10 Models on Unseen CIFAR-10.1 Dataset")
     parser.add_argument("--data_dir", type=str, default="./data/cifar10_1",
                         help="Path to store/load CIFAR-10.1 data files.")
-    parser.add_argument("--samples_per_class", type=int, default=100,
-                        help="Number of images per class for test subset (default: 100 = 1,000 images; max: 200 = 2,000 images).")
+    parser.add_argument("--samples_per_class", type=int, default=200,
+                        help="Number of images per class for test subset (default: 200 = 2,000 images, i.e., the full benchmark).")
     parser.add_argument("--seed", type=int, default=42,
                         help="Random seed for subset selection (default: 42).")
     parser.add_argument("--device", type=str, default="cuda",
@@ -632,17 +643,37 @@ def main():
                         help="Enable first stem conv and final linear layer quantization.")
 
     # Batch Comparison Checkpoint paths
-    parser.add_argument("--teacher_ckpt", type=str, default="teacher_best.pth",
+    parser.add_argument("--teacher_ckpt", type=str, default=None,
                         help="Path to trained FP32 ResNet-34 teacher checkpoint.")
-    parser.add_argument("--student_base_ckpt", type=str, default="student_base_best.pth",
+    parser.add_argument("--student_base_ckpt", type=str, default=None,
                         help="Path to trained FP32 ResNet-18 student baseline checkpoint.")
-    parser.add_argument("--twn_student_ckpt", type=str, default="baseline4_best.pth",
-                        help="Path to trained Best TWN ResNet-18 student checkpoint (e.g. baseline4_best.pth).")
-    parser.add_argument("--late_student_ckpt", type=str, default="late_baseline4_best.pth",
-                        help="Path to trained Best LATe ResNet-18 student checkpoint (e.g. late_baseline4_best.pth).")
+    parser.add_argument("--twn_student_ckpt", type=str, default=None,
+                        help="Path to trained Best TWN ResNet-18 student checkpoint (e.g. baseline4_temp4_best.pth).")
+    parser.add_argument("--late_student_ckpt", type=str, default=None,
+                        help="Path to trained Best LATe ResNet-18 student checkpoint (e.g. late_baseline4_temp4_best.pth).")
 
     args = parser.parse_args()
     device = torch.device(args.device if torch.cuda.is_available() or args.device == "cpu" else "cpu")
+
+    # Resolve default paths dynamically if not explicitly specified
+    teacher_ckpt = resolve_checkpoint(args.teacher_ckpt or "teacher_best.pth", [
+        "results/03_teacher_and_temp2_twn/teacher_best.pth",
+        "teacher_best.pth"
+    ])
+    student_base_ckpt = resolve_checkpoint(args.student_base_ckpt or "student_base_best.pth", [
+        "results/01_default_twn_temp4/student_base_best.pth",
+        "student_base_best.pth"
+    ])
+    twn_student_ckpt = resolve_checkpoint(args.twn_student_ckpt or "baseline4_temp4_best.pth", [
+        "results/01_default_twn_temp4/baseline4_temp4_best.pth",
+        "baseline4_temp4_best.pth",
+        "baseline4_best.pth"
+    ])
+    late_student_ckpt = resolve_checkpoint(args.late_student_ckpt or "late_baseline4_temp4_best.pth", [
+        "results/05_late_loss_aware_ternarization/late_baseline4_temp4_best.pth",
+        "late_baseline4_temp4_best.pth",
+        "late_baseline4_best.pth"
+    ])
 
     # 1. Load Unseen CIFAR-10.1 Subset
     subset_images, subset_labels = load_cifar10_1_subset(
@@ -664,7 +695,10 @@ def main():
 
     # 4. Single Model Evaluation Branch
     if args.model_ckpt:
-        ckpt = args.model_ckpt
+        ckpt = resolve_checkpoint(args.model_ckpt, [
+            os.path.join("results/01_default_twn_temp4", args.model_ckpt),
+            os.path.join("results/05_late_loss_aware_ternarization", args.model_ckpt)
+        ])
         if not os.path.exists(ckpt):
             print(f"ERROR: Checkpoint file '{ckpt}' not found!")
             sys.exit(1)
@@ -706,17 +740,17 @@ def main():
 
     # 5. Multi-Model Batch Comparison Branch
     models_to_test = [
-        {"name": "FP32 ResNet-34 Teacher",  "model_fn": lambda: ResNet34(10),     "ckpt": args.teacher_ckpt},
-        {"name": "FP32 ResNet-18 Student",  "model_fn": lambda: ResNet18(10),     "ckpt": args.student_base_ckpt},
-        {"name": "Best TWN ResNet-18 (KD)", "model_fn": lambda: TWNResNet18(10, quantize_first_last=args.quantize_first_last),  "ckpt": args.twn_student_ckpt},
-        {"name": "Best LATe ResNet-18 (KD)","model_fn": lambda: LATeResNet18(10, quantize_first_last=args.quantize_first_last), "ckpt": args.late_student_ckpt},
+        {"name": "FP32 ResNet-34 Teacher",  "model_fn": lambda: ResNet34(10),     "ckpt": teacher_ckpt},
+        {"name": "FP32 ResNet-18 Student",  "model_fn": lambda: ResNet18(10),     "ckpt": student_base_ckpt},
+        {"name": "Best TWN ResNet-18 (KD)", "model_fn": lambda: TWNResNet18(10, quantize_first_last=args.quantize_first_last),  "ckpt": twn_student_ckpt},
+        {"name": "Best LATe ResNet-18 (KD)","model_fn": lambda: LATeResNet18(10, quantize_first_last=args.quantize_first_last), "ckpt": late_student_ckpt},
     ]
 
     results_table = []
     cm_dict = {}
 
     print("\n" + "=" * 80)
-    print(f"EVALUATION ON UNSEEN CIFAR-10.1 SUBSET ({len(dataset)} IMAGES TOTAL)")
+    print(f"EVALUATION ON UNSEEN CIFAR-10.1 BENCHMARK ({len(dataset)} IMAGES TOTAL)")
     print("=" * 80)
 
     for item in models_to_test:

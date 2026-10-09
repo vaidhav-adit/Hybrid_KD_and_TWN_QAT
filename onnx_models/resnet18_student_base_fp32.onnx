@@ -1,0 +1,1661 @@
+
+pytorch2.14.1:˜å
+à
+
+input
+conv1.weight
+conv1.weight_biasgetitemnode_Conv_292"Conv*
+group†*
+pads@@@@†*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†J¨
+	namespaceû: train_master.ResNetCIFAR/bn1: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJù
+pkg.torch.onnx.class_hierarchy{['train_master.ResNetCIFAR', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']Jî
+pkg.torch.onnx.fx_node˘%_native_batch_norm_legit_no_training : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d, %p_bn1_weight, %p_bn1_bias, %b_bn1_running_mean, %b_bn1_running_var, 0.1, 1e-05), kwargs = {})JQ
+pkg.torch.onnx.name_scopes3['', 'bn1', '_native_batch_norm_legit_no_training']Jπ
+pkg.torch.onnx.stack_traceöFile "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 214, in forward
+    out = F.relu(self.bn1(self.conv1(x)))
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+Ü
+getitemrelu	node_relu"ReluJ?
+	namespace2: train_master.ResNetCIFAR/relu: aten.relu.defaultJS
+pkg.torch.onnx.class_hierarchy1['train_master.ResNetCIFAR', 'aten.relu.default']JÑ
+pkg.torch.onnx.fx_nodej%relu : [num_users=2] = call_function[target=torch.ops.aten.relu.default](args = (%getitem,), kwargs = {})J*
+pkg.torch.onnx.name_scopes['', 'relu']Jö
+pkg.torch.onnx.stack_trace|File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 214, in forward
+    out = F.relu(self.bn1(self.conv1(x)))
+ì
+relu
+layer1.0.conv1.weight
+layer1.0.conv1.weight_bias	getitem_3node_Conv_294"Conv*
+group†*
+pads@@@@†*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†Já
+	namespace˘: train_master.ResNetCIFAR/layer1: torch.nn.modules.container.Sequential/layer1.0: train_master.BasicBlock/layer1.0.bn1: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_1: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ‚
+pkg.torch.onnx.class_hierarchyø['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']Jº
+pkg.torch.onnx.fx_node°%_native_batch_norm_legit_no_training_1 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_1, %p_layer1_0_bn1_weight, %p_layer1_0_bn1_bias, %b_layer1_0_bn1_running_mean, %b_layer1_0_bn1_running_var, 0.1, 1e-05), kwargs = {})Jr
+pkg.torch.onnx.name_scopesT['', 'layer1', 'layer1.0', 'layer1.0.bn1', '_native_batch_norm_legit_no_training_1']J»
+pkg.torch.onnx.stack_trace©File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 215, in forward
+    out = self.layer1(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 186, in forward
+    out = F.relu(self.bn1(self.conv1(x)))
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+—
+	getitem_3relu_1node_relu_1"ReluJí
+	namespaceÑ: train_master.ResNetCIFAR/layer1: torch.nn.modules.container.Sequential/layer1.0: train_master.BasicBlock/relu_1: aten.relu.defaultJó
+pkg.torch.onnx.class_hierarchyu['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.relu.default']Jà
+pkg.torch.onnx.fx_noden%relu_1 : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%getitem_3,), kwargs = {})JB
+pkg.torch.onnx.name_scopes$['', 'layer1', 'layer1.0', 'relu_1']J™
+pkg.torch.onnx.stack_traceãFile "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 215, in forward
+    out = self.layer1(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 186, in forward
+    out = F.relu(self.bn1(self.conv1(x)))
+è
+relu_1
+layer1.0.conv2.weight
+layer1.0.conv2.weight_bias	getitem_6node_Conv_296"Conv*
+group†*
+pads@@@@†*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†Já
+	namespace˘: train_master.ResNetCIFAR/layer1: torch.nn.modules.container.Sequential/layer1.0: train_master.BasicBlock/layer1.0.bn2: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_2: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ‚
+pkg.torch.onnx.class_hierarchyø['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']Jº
+pkg.torch.onnx.fx_node°%_native_batch_norm_legit_no_training_2 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_2, %p_layer1_0_bn2_weight, %p_layer1_0_bn2_bias, %b_layer1_0_bn2_running_mean, %b_layer1_0_bn2_running_var, 0.1, 1e-05), kwargs = {})Jr
+pkg.torch.onnx.name_scopesT['', 'layer1', 'layer1.0', 'layer1.0.bn2', '_native_batch_norm_legit_no_training_2']J¬
+pkg.torch.onnx.stack_trace£File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 215, in forward
+    out = self.layer1(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 187, in forward
+    out = self.bn2(self.conv2(out))
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+»
+	getitem_6
+reluadd_50node_add_50"AddJê
+	namespaceÇ: train_master.ResNetCIFAR/layer1: torch.nn.modules.container.Sequential/layer1.0: train_master.BasicBlock/add_50: aten.add.TensorJï
+pkg.torch.onnx.class_hierarchys['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.add.Tensor']Jå
+pkg.torch.onnx.fx_noder%add_50 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%getitem_6, %relu), kwargs = {})JB
+pkg.torch.onnx.name_scopes$['', 'layer1', 'layer1.0', 'add_50']Jú
+pkg.torch.onnx.stack_trace˝File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 215, in forward
+    out = self.layer1(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 188, in forward
+    out += self.shortcut(x)
+∏
+add_50relu_2node_relu_2"ReluJí
+	namespaceÑ: train_master.ResNetCIFAR/layer1: torch.nn.modules.container.Sequential/layer1.0: train_master.BasicBlock/relu_2: aten.relu.defaultJó
+pkg.torch.onnx.class_hierarchyu['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.relu.default']JÖ
+pkg.torch.onnx.fx_nodek%relu_2 : [num_users=2] = call_function[target=torch.ops.aten.relu.default](args = (%add_50,), kwargs = {})JB
+pkg.torch.onnx.name_scopes$['', 'layer1', 'layer1.0', 'relu_2']Jó
+pkg.torch.onnx.stack_trace¯File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 215, in forward
+    out = self.layer1(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 189, in forward
+    return F.relu(out)
+ï
+relu_2
+layer1.1.conv1.weight
+layer1.1.conv1.weight_bias	getitem_9node_Conv_298"Conv*
+group†*
+pads@@@@†*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†Já
+	namespace˘: train_master.ResNetCIFAR/layer1: torch.nn.modules.container.Sequential/layer1.1: train_master.BasicBlock/layer1.1.bn1: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_3: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ‚
+pkg.torch.onnx.class_hierarchyø['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']Jº
+pkg.torch.onnx.fx_node°%_native_batch_norm_legit_no_training_3 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_3, %p_layer1_1_bn1_weight, %p_layer1_1_bn1_bias, %b_layer1_1_bn1_running_mean, %b_layer1_1_bn1_running_var, 0.1, 1e-05), kwargs = {})Jr
+pkg.torch.onnx.name_scopesT['', 'layer1', 'layer1.1', 'layer1.1.bn1', '_native_batch_norm_legit_no_training_3']J»
+pkg.torch.onnx.stack_trace©File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 215, in forward
+    out = self.layer1(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 186, in forward
+    out = F.relu(self.bn1(self.conv1(x)))
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+—
+	getitem_9relu_3node_relu_3"ReluJí
+	namespaceÑ: train_master.ResNetCIFAR/layer1: torch.nn.modules.container.Sequential/layer1.1: train_master.BasicBlock/relu_3: aten.relu.defaultJó
+pkg.torch.onnx.class_hierarchyu['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.relu.default']Jà
+pkg.torch.onnx.fx_noden%relu_3 : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%getitem_9,), kwargs = {})JB
+pkg.torch.onnx.name_scopes$['', 'layer1', 'layer1.1', 'relu_3']J™
+pkg.torch.onnx.stack_traceãFile "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 215, in forward
+    out = self.layer1(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 186, in forward
+    out = F.relu(self.bn1(self.conv1(x)))
+ê
+relu_3
+layer1.1.conv2.weight
+layer1.1.conv2.weight_bias
+getitem_12node_Conv_300"Conv*
+group†*
+pads@@@@†*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†Já
+	namespace˘: train_master.ResNetCIFAR/layer1: torch.nn.modules.container.Sequential/layer1.1: train_master.BasicBlock/layer1.1.bn2: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_4: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ‚
+pkg.torch.onnx.class_hierarchyø['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']Jº
+pkg.torch.onnx.fx_node°%_native_batch_norm_legit_no_training_4 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_4, %p_layer1_1_bn2_weight, %p_layer1_1_bn2_bias, %b_layer1_1_bn2_running_mean, %b_layer1_1_bn2_running_var, 0.1, 1e-05), kwargs = {})Jr
+pkg.torch.onnx.name_scopesT['', 'layer1', 'layer1.1', 'layer1.1.bn2', '_native_batch_norm_legit_no_training_4']J¬
+pkg.torch.onnx.stack_trace£File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 215, in forward
+    out = self.layer1(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 187, in forward
+    out = self.bn2(self.conv2(out))
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+Œ
+
+getitem_12
+relu_2add_96node_add_96"AddJê
+	namespaceÇ: train_master.ResNetCIFAR/layer1: torch.nn.modules.container.Sequential/layer1.1: train_master.BasicBlock/add_96: aten.add.TensorJï
+pkg.torch.onnx.class_hierarchys['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.add.Tensor']Jè
+pkg.torch.onnx.fx_nodeu%add_96 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%getitem_12, %relu_2), kwargs = {})JB
+pkg.torch.onnx.name_scopes$['', 'layer1', 'layer1.1', 'add_96']Jú
+pkg.torch.onnx.stack_trace˝File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 215, in forward
+    out = self.layer1(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 188, in forward
+    out += self.shortcut(x)
+∏
+add_96relu_4node_relu_4"ReluJí
+	namespaceÑ: train_master.ResNetCIFAR/layer1: torch.nn.modules.container.Sequential/layer1.1: train_master.BasicBlock/relu_4: aten.relu.defaultJó
+pkg.torch.onnx.class_hierarchyu['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.relu.default']JÖ
+pkg.torch.onnx.fx_nodek%relu_4 : [num_users=2] = call_function[target=torch.ops.aten.relu.default](args = (%add_96,), kwargs = {})JB
+pkg.torch.onnx.name_scopes$['', 'layer1', 'layer1.1', 'relu_4']Jó
+pkg.torch.onnx.stack_trace¯File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 215, in forward
+    out = self.layer1(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 189, in forward
+    return F.relu(out)
+ñ
+relu_4
+layer2.0.conv1.weight
+layer2.0.conv1.weight_bias
+getitem_15node_Conv_302"Conv*
+group†*
+pads@@@@†*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†Já
+	namespace˘: train_master.ResNetCIFAR/layer2: torch.nn.modules.container.Sequential/layer2.0: train_master.BasicBlock/layer2.0.bn1: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_5: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ‚
+pkg.torch.onnx.class_hierarchyø['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']Jº
+pkg.torch.onnx.fx_node°%_native_batch_norm_legit_no_training_5 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_5, %p_layer2_0_bn1_weight, %p_layer2_0_bn1_bias, %b_layer2_0_bn1_running_mean, %b_layer2_0_bn1_running_var, 0.1, 1e-05), kwargs = {})Jr
+pkg.torch.onnx.name_scopesT['', 'layer2', 'layer2.0', 'layer2.0.bn1', '_native_batch_norm_legit_no_training_5']J»
+pkg.torch.onnx.stack_trace©File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 216, in forward
+    out = self.layer2(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 186, in forward
+    out = F.relu(self.bn1(self.conv1(x)))
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+”
+
+getitem_15relu_5node_relu_5"ReluJí
+	namespaceÑ: train_master.ResNetCIFAR/layer2: torch.nn.modules.container.Sequential/layer2.0: train_master.BasicBlock/relu_5: aten.relu.defaultJó
+pkg.torch.onnx.class_hierarchyu['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.relu.default']Jâ
+pkg.torch.onnx.fx_nodeo%relu_5 : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%getitem_15,), kwargs = {})JB
+pkg.torch.onnx.name_scopes$['', 'layer2', 'layer2.0', 'relu_5']J™
+pkg.torch.onnx.stack_traceãFile "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 216, in forward
+    out = self.layer2(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 186, in forward
+    out = F.relu(self.bn1(self.conv1(x)))
+ê
+relu_5
+layer2.0.conv2.weight
+layer2.0.conv2.weight_bias
+getitem_18node_Conv_304"Conv*
+group†*
+pads@@@@†*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†Já
+	namespace˘: train_master.ResNetCIFAR/layer2: torch.nn.modules.container.Sequential/layer2.0: train_master.BasicBlock/layer2.0.bn2: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_6: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ‚
+pkg.torch.onnx.class_hierarchyø['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']Jº
+pkg.torch.onnx.fx_node°%_native_batch_norm_legit_no_training_6 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_6, %p_layer2_0_bn2_weight, %p_layer2_0_bn2_bias, %b_layer2_0_bn2_running_mean, %b_layer2_0_bn2_running_var, 0.1, 1e-05), kwargs = {})Jr
+pkg.torch.onnx.name_scopesT['', 'layer2', 'layer2.0', 'layer2.0.bn2', '_native_batch_norm_legit_no_training_6']J¬
+pkg.torch.onnx.stack_trace£File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 216, in forward
+    out = self.layer2(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 187, in forward
+    out = self.bn2(self.conv2(out))
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+”
+relu_4
+layer2.0.shortcut.0.weight
+layer2.0.shortcut.0.weight_bias
+getitem_21node_Conv_306"Conv*
+group†*
+pads@ @ @ @ †*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†J«
+	namespaceπ: train_master.ResNetCIFAR/layer2: torch.nn.modules.container.Sequential/layer2.0: train_master.BasicBlock/layer2.0.shortcut: torch.nn.modules.container.Sequential/layer2.0.shortcut.1: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_7: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJã
+pkg.torch.onnx.class_hierarchyË['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']Jÿ
+pkg.torch.onnx.fx_nodeΩ%_native_batch_norm_legit_no_training_7 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_7, %p_layer2_0_shortcut_1_weight, %p_layer2_0_shortcut_1_bias, %b_layer2_0_shortcut_1_running_mean, %b_layer2_0_shortcut_1_running_var, 0.1, 1e-05), kwargs = {})Jé
+pkg.torch.onnx.name_scopesp['', 'layer2', 'layer2.0', 'layer2.0.shortcut', 'layer2.0.shortcut.1', '_native_batch_norm_legit_no_training_7']JŸ
+pkg.torch.onnx.stack_trace∫File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 216, in forward
+    out = self.layer2(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 188, in forward
+    out += self.shortcut(x)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+€
+
+getitem_18
+
+getitem_21add_152node_add_152"AddJë
+	namespaceÉ: train_master.ResNetCIFAR/layer2: torch.nn.modules.container.Sequential/layer2.0: train_master.BasicBlock/add_152: aten.add.TensorJï
+pkg.torch.onnx.class_hierarchys['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.add.Tensor']Jî
+pkg.torch.onnx.fx_nodez%add_152 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%getitem_18, %getitem_21), kwargs = {})JC
+pkg.torch.onnx.name_scopes%['', 'layer2', 'layer2.0', 'add_152']Jú
+pkg.torch.onnx.stack_trace˝File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 216, in forward
+    out = self.layer2(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 188, in forward
+    out += self.shortcut(x)
+∫
+add_152relu_6node_relu_6"ReluJí
+	namespaceÑ: train_master.ResNetCIFAR/layer2: torch.nn.modules.container.Sequential/layer2.0: train_master.BasicBlock/relu_6: aten.relu.defaultJó
+pkg.torch.onnx.class_hierarchyu['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.relu.default']JÜ
+pkg.torch.onnx.fx_nodel%relu_6 : [num_users=2] = call_function[target=torch.ops.aten.relu.default](args = (%add_152,), kwargs = {})JB
+pkg.torch.onnx.name_scopes$['', 'layer2', 'layer2.0', 'relu_6']Jó
+pkg.torch.onnx.stack_trace¯File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 216, in forward
+    out = self.layer2(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 189, in forward
+    return F.relu(out)
+ñ
+relu_6
+layer2.1.conv1.weight
+layer2.1.conv1.weight_bias
+getitem_24node_Conv_308"Conv*
+group†*
+pads@@@@†*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†Já
+	namespace˘: train_master.ResNetCIFAR/layer2: torch.nn.modules.container.Sequential/layer2.1: train_master.BasicBlock/layer2.1.bn1: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_8: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ‚
+pkg.torch.onnx.class_hierarchyø['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']Jº
+pkg.torch.onnx.fx_node°%_native_batch_norm_legit_no_training_8 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_8, %p_layer2_1_bn1_weight, %p_layer2_1_bn1_bias, %b_layer2_1_bn1_running_mean, %b_layer2_1_bn1_running_var, 0.1, 1e-05), kwargs = {})Jr
+pkg.torch.onnx.name_scopesT['', 'layer2', 'layer2.1', 'layer2.1.bn1', '_native_batch_norm_legit_no_training_8']J»
+pkg.torch.onnx.stack_trace©File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 216, in forward
+    out = self.layer2(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 186, in forward
+    out = F.relu(self.bn1(self.conv1(x)))
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+”
+
+getitem_24relu_7node_relu_7"ReluJí
+	namespaceÑ: train_master.ResNetCIFAR/layer2: torch.nn.modules.container.Sequential/layer2.1: train_master.BasicBlock/relu_7: aten.relu.defaultJó
+pkg.torch.onnx.class_hierarchyu['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.relu.default']Jâ
+pkg.torch.onnx.fx_nodeo%relu_7 : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%getitem_24,), kwargs = {})JB
+pkg.torch.onnx.name_scopes$['', 'layer2', 'layer2.1', 'relu_7']J™
+pkg.torch.onnx.stack_traceãFile "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 216, in forward
+    out = self.layer2(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 186, in forward
+    out = F.relu(self.bn1(self.conv1(x)))
+ê
+relu_7
+layer2.1.conv2.weight
+layer2.1.conv2.weight_bias
+getitem_27node_Conv_310"Conv*
+group†*
+pads@@@@†*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†Já
+	namespace˘: train_master.ResNetCIFAR/layer2: torch.nn.modules.container.Sequential/layer2.1: train_master.BasicBlock/layer2.1.bn2: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_9: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ‚
+pkg.torch.onnx.class_hierarchyø['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']Jº
+pkg.torch.onnx.fx_node°%_native_batch_norm_legit_no_training_9 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_9, %p_layer2_1_bn2_weight, %p_layer2_1_bn2_bias, %b_layer2_1_bn2_running_mean, %b_layer2_1_bn2_running_var, 0.1, 1e-05), kwargs = {})Jr
+pkg.torch.onnx.name_scopesT['', 'layer2', 'layer2.1', 'layer2.1.bn2', '_native_batch_norm_legit_no_training_9']J¬
+pkg.torch.onnx.stack_trace£File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 216, in forward
+    out = self.layer2(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 187, in forward
+    out = self.bn2(self.conv2(out))
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+”
+
+getitem_27
+relu_6add_198node_add_198"AddJë
+	namespaceÉ: train_master.ResNetCIFAR/layer2: torch.nn.modules.container.Sequential/layer2.1: train_master.BasicBlock/add_198: aten.add.TensorJï
+pkg.torch.onnx.class_hierarchys['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.add.Tensor']Jê
+pkg.torch.onnx.fx_nodev%add_198 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%getitem_27, %relu_6), kwargs = {})JC
+pkg.torch.onnx.name_scopes%['', 'layer2', 'layer2.1', 'add_198']Jú
+pkg.torch.onnx.stack_trace˝File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 216, in forward
+    out = self.layer2(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 188, in forward
+    out += self.shortcut(x)
+∫
+add_198relu_8node_relu_8"ReluJí
+	namespaceÑ: train_master.ResNetCIFAR/layer2: torch.nn.modules.container.Sequential/layer2.1: train_master.BasicBlock/relu_8: aten.relu.defaultJó
+pkg.torch.onnx.class_hierarchyu['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.relu.default']JÜ
+pkg.torch.onnx.fx_nodel%relu_8 : [num_users=2] = call_function[target=torch.ops.aten.relu.default](args = (%add_198,), kwargs = {})JB
+pkg.torch.onnx.name_scopes$['', 'layer2', 'layer2.1', 'relu_8']Jó
+pkg.torch.onnx.stack_trace¯File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 216, in forward
+    out = self.layer2(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 189, in forward
+    return F.relu(out)
+ö
+relu_8
+layer3.0.conv1.weight
+layer3.0.conv1.weight_bias
+getitem_30node_Conv_312"Conv*
+group†*
+pads@@@@†*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†Jà
+	namespace˙: train_master.ResNetCIFAR/layer3: torch.nn.modules.container.Sequential/layer3.0: train_master.BasicBlock/layer3.0.bn1: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_10: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ‚
+pkg.torch.onnx.class_hierarchyø['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']Jæ
+pkg.torch.onnx.fx_node£%_native_batch_norm_legit_no_training_10 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_10, %p_layer3_0_bn1_weight, %p_layer3_0_bn1_bias, %b_layer3_0_bn1_running_mean, %b_layer3_0_bn1_running_var, 0.1, 1e-05), kwargs = {})Js
+pkg.torch.onnx.name_scopesU['', 'layer3', 'layer3.0', 'layer3.0.bn1', '_native_batch_norm_legit_no_training_10']J»
+pkg.torch.onnx.stack_trace©File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 217, in forward
+    out = self.layer3(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 186, in forward
+    out = F.relu(self.bn1(self.conv1(x)))
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+”
+
+getitem_30relu_9node_relu_9"ReluJí
+	namespaceÑ: train_master.ResNetCIFAR/layer3: torch.nn.modules.container.Sequential/layer3.0: train_master.BasicBlock/relu_9: aten.relu.defaultJó
+pkg.torch.onnx.class_hierarchyu['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.relu.default']Jâ
+pkg.torch.onnx.fx_nodeo%relu_9 : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%getitem_30,), kwargs = {})JB
+pkg.torch.onnx.name_scopes$['', 'layer3', 'layer3.0', 'relu_9']J™
+pkg.torch.onnx.stack_traceãFile "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 217, in forward
+    out = self.layer3(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 186, in forward
+    out = F.relu(self.bn1(self.conv1(x)))
+î
+relu_9
+layer3.0.conv2.weight
+layer3.0.conv2.weight_bias
+getitem_33node_Conv_314"Conv*
+group†*
+pads@@@@†*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†Jà
+	namespace˙: train_master.ResNetCIFAR/layer3: torch.nn.modules.container.Sequential/layer3.0: train_master.BasicBlock/layer3.0.bn2: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_11: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ‚
+pkg.torch.onnx.class_hierarchyø['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']Jæ
+pkg.torch.onnx.fx_node£%_native_batch_norm_legit_no_training_11 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_11, %p_layer3_0_bn2_weight, %p_layer3_0_bn2_bias, %b_layer3_0_bn2_running_mean, %b_layer3_0_bn2_running_var, 0.1, 1e-05), kwargs = {})Js
+pkg.torch.onnx.name_scopesU['', 'layer3', 'layer3.0', 'layer3.0.bn2', '_native_batch_norm_legit_no_training_11']J¬
+pkg.torch.onnx.stack_trace£File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 217, in forward
+    out = self.layer3(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 187, in forward
+    out = self.bn2(self.conv2(out))
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+◊
+relu_8
+layer3.0.shortcut.0.weight
+layer3.0.shortcut.0.weight_bias
+getitem_36node_Conv_316"Conv*
+group†*
+pads@ @ @ @ †*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†J»
+	namespace∫: train_master.ResNetCIFAR/layer3: torch.nn.modules.container.Sequential/layer3.0: train_master.BasicBlock/layer3.0.shortcut: torch.nn.modules.container.Sequential/layer3.0.shortcut.1: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_12: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJã
+pkg.torch.onnx.class_hierarchyË['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']J⁄
+pkg.torch.onnx.fx_nodeø%_native_batch_norm_legit_no_training_12 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_12, %p_layer3_0_shortcut_1_weight, %p_layer3_0_shortcut_1_bias, %b_layer3_0_shortcut_1_running_mean, %b_layer3_0_shortcut_1_running_var, 0.1, 1e-05), kwargs = {})Jè
+pkg.torch.onnx.name_scopesq['', 'layer3', 'layer3.0', 'layer3.0.shortcut', 'layer3.0.shortcut.1', '_native_batch_norm_legit_no_training_12']JŸ
+pkg.torch.onnx.stack_trace∫File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 217, in forward
+    out = self.layer3(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 188, in forward
+    out += self.shortcut(x)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+€
+
+getitem_33
+
+getitem_36add_254node_add_254"AddJë
+	namespaceÉ: train_master.ResNetCIFAR/layer3: torch.nn.modules.container.Sequential/layer3.0: train_master.BasicBlock/add_254: aten.add.TensorJï
+pkg.torch.onnx.class_hierarchys['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.add.Tensor']Jî
+pkg.torch.onnx.fx_nodez%add_254 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%getitem_33, %getitem_36), kwargs = {})JC
+pkg.torch.onnx.name_scopes%['', 'layer3', 'layer3.0', 'add_254']Jú
+pkg.torch.onnx.stack_trace˝File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 217, in forward
+    out = self.layer3(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 188, in forward
+    out += self.shortcut(x)
+ø
+add_254relu_10node_relu_10"ReluJì
+	namespaceÖ: train_master.ResNetCIFAR/layer3: torch.nn.modules.container.Sequential/layer3.0: train_master.BasicBlock/relu_10: aten.relu.defaultJó
+pkg.torch.onnx.class_hierarchyu['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.relu.default']Já
+pkg.torch.onnx.fx_nodem%relu_10 : [num_users=2] = call_function[target=torch.ops.aten.relu.default](args = (%add_254,), kwargs = {})JC
+pkg.torch.onnx.name_scopes%['', 'layer3', 'layer3.0', 'relu_10']Jó
+pkg.torch.onnx.stack_trace¯File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 217, in forward
+    out = self.layer3(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 189, in forward
+    return F.relu(out)
+õ
+relu_10
+layer3.1.conv1.weight
+layer3.1.conv1.weight_bias
+getitem_39node_Conv_318"Conv*
+group†*
+pads@@@@†*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†Jà
+	namespace˙: train_master.ResNetCIFAR/layer3: torch.nn.modules.container.Sequential/layer3.1: train_master.BasicBlock/layer3.1.bn1: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_13: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ‚
+pkg.torch.onnx.class_hierarchyø['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']Jæ
+pkg.torch.onnx.fx_node£%_native_batch_norm_legit_no_training_13 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_13, %p_layer3_1_bn1_weight, %p_layer3_1_bn1_bias, %b_layer3_1_bn1_running_mean, %b_layer3_1_bn1_running_var, 0.1, 1e-05), kwargs = {})Js
+pkg.torch.onnx.name_scopesU['', 'layer3', 'layer3.1', 'layer3.1.bn1', '_native_batch_norm_legit_no_training_13']J»
+pkg.torch.onnx.stack_trace©File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 217, in forward
+    out = self.layer3(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 186, in forward
+    out = F.relu(self.bn1(self.conv1(x)))
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+ÿ
+
+getitem_39relu_11node_relu_11"ReluJì
+	namespaceÖ: train_master.ResNetCIFAR/layer3: torch.nn.modules.container.Sequential/layer3.1: train_master.BasicBlock/relu_11: aten.relu.defaultJó
+pkg.torch.onnx.class_hierarchyu['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.relu.default']Jä
+pkg.torch.onnx.fx_nodep%relu_11 : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%getitem_39,), kwargs = {})JC
+pkg.torch.onnx.name_scopes%['', 'layer3', 'layer3.1', 'relu_11']J™
+pkg.torch.onnx.stack_traceãFile "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 217, in forward
+    out = self.layer3(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 186, in forward
+    out = F.relu(self.bn1(self.conv1(x)))
+ï
+relu_11
+layer3.1.conv2.weight
+layer3.1.conv2.weight_bias
+getitem_42node_Conv_320"Conv*
+group†*
+pads@@@@†*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†Jà
+	namespace˙: train_master.ResNetCIFAR/layer3: torch.nn.modules.container.Sequential/layer3.1: train_master.BasicBlock/layer3.1.bn2: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_14: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ‚
+pkg.torch.onnx.class_hierarchyø['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']Jæ
+pkg.torch.onnx.fx_node£%_native_batch_norm_legit_no_training_14 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_14, %p_layer3_1_bn2_weight, %p_layer3_1_bn2_bias, %b_layer3_1_bn2_running_mean, %b_layer3_1_bn2_running_var, 0.1, 1e-05), kwargs = {})Js
+pkg.torch.onnx.name_scopesU['', 'layer3', 'layer3.1', 'layer3.1.bn2', '_native_batch_norm_legit_no_training_14']J¬
+pkg.torch.onnx.stack_trace£File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 217, in forward
+    out = self.layer3(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 187, in forward
+    out = self.bn2(self.conv2(out))
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+’
+
+getitem_42
+relu_10add_300node_add_300"AddJë
+	namespaceÉ: train_master.ResNetCIFAR/layer3: torch.nn.modules.container.Sequential/layer3.1: train_master.BasicBlock/add_300: aten.add.TensorJï
+pkg.torch.onnx.class_hierarchys['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.add.Tensor']Jë
+pkg.torch.onnx.fx_nodew%add_300 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%getitem_42, %relu_10), kwargs = {})JC
+pkg.torch.onnx.name_scopes%['', 'layer3', 'layer3.1', 'add_300']Jú
+pkg.torch.onnx.stack_trace˝File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 217, in forward
+    out = self.layer3(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 188, in forward
+    out += self.shortcut(x)
+ø
+add_300relu_12node_relu_12"ReluJì
+	namespaceÖ: train_master.ResNetCIFAR/layer3: torch.nn.modules.container.Sequential/layer3.1: train_master.BasicBlock/relu_12: aten.relu.defaultJó
+pkg.torch.onnx.class_hierarchyu['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.relu.default']Já
+pkg.torch.onnx.fx_nodem%relu_12 : [num_users=2] = call_function[target=torch.ops.aten.relu.default](args = (%add_300,), kwargs = {})JC
+pkg.torch.onnx.name_scopes%['', 'layer3', 'layer3.1', 'relu_12']Jó
+pkg.torch.onnx.stack_trace¯File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 217, in forward
+    out = self.layer3(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 189, in forward
+    return F.relu(out)
+õ
+relu_12
+layer4.0.conv1.weight
+layer4.0.conv1.weight_bias
+getitem_45node_Conv_322"Conv*
+group†*
+pads@@@@†*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†Jà
+	namespace˙: train_master.ResNetCIFAR/layer4: torch.nn.modules.container.Sequential/layer4.0: train_master.BasicBlock/layer4.0.bn1: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_15: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ‚
+pkg.torch.onnx.class_hierarchyø['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']Jæ
+pkg.torch.onnx.fx_node£%_native_batch_norm_legit_no_training_15 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_15, %p_layer4_0_bn1_weight, %p_layer4_0_bn1_bias, %b_layer4_0_bn1_running_mean, %b_layer4_0_bn1_running_var, 0.1, 1e-05), kwargs = {})Js
+pkg.torch.onnx.name_scopesU['', 'layer4', 'layer4.0', 'layer4.0.bn1', '_native_batch_norm_legit_no_training_15']J»
+pkg.torch.onnx.stack_trace©File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 218, in forward
+    out = self.layer4(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 186, in forward
+    out = F.relu(self.bn1(self.conv1(x)))
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+ÿ
+
+getitem_45relu_13node_relu_13"ReluJì
+	namespaceÖ: train_master.ResNetCIFAR/layer4: torch.nn.modules.container.Sequential/layer4.0: train_master.BasicBlock/relu_13: aten.relu.defaultJó
+pkg.torch.onnx.class_hierarchyu['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.relu.default']Jä
+pkg.torch.onnx.fx_nodep%relu_13 : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%getitem_45,), kwargs = {})JC
+pkg.torch.onnx.name_scopes%['', 'layer4', 'layer4.0', 'relu_13']J™
+pkg.torch.onnx.stack_traceãFile "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 218, in forward
+    out = self.layer4(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 186, in forward
+    out = F.relu(self.bn1(self.conv1(x)))
+ï
+relu_13
+layer4.0.conv2.weight
+layer4.0.conv2.weight_bias
+getitem_48node_Conv_324"Conv*
+group†*
+pads@@@@†*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†Jà
+	namespace˙: train_master.ResNetCIFAR/layer4: torch.nn.modules.container.Sequential/layer4.0: train_master.BasicBlock/layer4.0.bn2: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_16: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ‚
+pkg.torch.onnx.class_hierarchyø['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']Jæ
+pkg.torch.onnx.fx_node£%_native_batch_norm_legit_no_training_16 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_16, %p_layer4_0_bn2_weight, %p_layer4_0_bn2_bias, %b_layer4_0_bn2_running_mean, %b_layer4_0_bn2_running_var, 0.1, 1e-05), kwargs = {})Js
+pkg.torch.onnx.name_scopesU['', 'layer4', 'layer4.0', 'layer4.0.bn2', '_native_batch_norm_legit_no_training_16']J¬
+pkg.torch.onnx.stack_trace£File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 218, in forward
+    out = self.layer4(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 187, in forward
+    out = self.bn2(self.conv2(out))
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+ÿ
+relu_12
+layer4.0.shortcut.0.weight
+layer4.0.shortcut.0.weight_bias
+getitem_51node_Conv_326"Conv*
+group†*
+pads@ @ @ @ †*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†J»
+	namespace∫: train_master.ResNetCIFAR/layer4: torch.nn.modules.container.Sequential/layer4.0: train_master.BasicBlock/layer4.0.shortcut: torch.nn.modules.container.Sequential/layer4.0.shortcut.1: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_17: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJã
+pkg.torch.onnx.class_hierarchyË['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']J⁄
+pkg.torch.onnx.fx_nodeø%_native_batch_norm_legit_no_training_17 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_17, %p_layer4_0_shortcut_1_weight, %p_layer4_0_shortcut_1_bias, %b_layer4_0_shortcut_1_running_mean, %b_layer4_0_shortcut_1_running_var, 0.1, 1e-05), kwargs = {})Jè
+pkg.torch.onnx.name_scopesq['', 'layer4', 'layer4.0', 'layer4.0.shortcut', 'layer4.0.shortcut.1', '_native_batch_norm_legit_no_training_17']JŸ
+pkg.torch.onnx.stack_trace∫File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 218, in forward
+    out = self.layer4(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 188, in forward
+    out += self.shortcut(x)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+€
+
+getitem_48
+
+getitem_51add_356node_add_356"AddJë
+	namespaceÉ: train_master.ResNetCIFAR/layer4: torch.nn.modules.container.Sequential/layer4.0: train_master.BasicBlock/add_356: aten.add.TensorJï
+pkg.torch.onnx.class_hierarchys['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.add.Tensor']Jî
+pkg.torch.onnx.fx_nodez%add_356 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%getitem_48, %getitem_51), kwargs = {})JC
+pkg.torch.onnx.name_scopes%['', 'layer4', 'layer4.0', 'add_356']Jú
+pkg.torch.onnx.stack_trace˝File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 218, in forward
+    out = self.layer4(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 188, in forward
+    out += self.shortcut(x)
+ø
+add_356relu_14node_relu_14"ReluJì
+	namespaceÖ: train_master.ResNetCIFAR/layer4: torch.nn.modules.container.Sequential/layer4.0: train_master.BasicBlock/relu_14: aten.relu.defaultJó
+pkg.torch.onnx.class_hierarchyu['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.relu.default']Já
+pkg.torch.onnx.fx_nodem%relu_14 : [num_users=2] = call_function[target=torch.ops.aten.relu.default](args = (%add_356,), kwargs = {})JC
+pkg.torch.onnx.name_scopes%['', 'layer4', 'layer4.0', 'relu_14']Jó
+pkg.torch.onnx.stack_trace¯File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 218, in forward
+    out = self.layer4(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 189, in forward
+    return F.relu(out)
+õ
+relu_14
+layer4.1.conv1.weight
+layer4.1.conv1.weight_bias
+getitem_54node_Conv_328"Conv*
+group†*
+pads@@@@†*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†Jà
+	namespace˙: train_master.ResNetCIFAR/layer4: torch.nn.modules.container.Sequential/layer4.1: train_master.BasicBlock/layer4.1.bn1: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_18: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ‚
+pkg.torch.onnx.class_hierarchyø['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']Jæ
+pkg.torch.onnx.fx_node£%_native_batch_norm_legit_no_training_18 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_18, %p_layer4_1_bn1_weight, %p_layer4_1_bn1_bias, %b_layer4_1_bn1_running_mean, %b_layer4_1_bn1_running_var, 0.1, 1e-05), kwargs = {})Js
+pkg.torch.onnx.name_scopesU['', 'layer4', 'layer4.1', 'layer4.1.bn1', '_native_batch_norm_legit_no_training_18']J»
+pkg.torch.onnx.stack_trace©File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 218, in forward
+    out = self.layer4(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 186, in forward
+    out = F.relu(self.bn1(self.conv1(x)))
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+ÿ
+
+getitem_54relu_15node_relu_15"ReluJì
+	namespaceÖ: train_master.ResNetCIFAR/layer4: torch.nn.modules.container.Sequential/layer4.1: train_master.BasicBlock/relu_15: aten.relu.defaultJó
+pkg.torch.onnx.class_hierarchyu['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.relu.default']Jä
+pkg.torch.onnx.fx_nodep%relu_15 : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%getitem_54,), kwargs = {})JC
+pkg.torch.onnx.name_scopes%['', 'layer4', 'layer4.1', 'relu_15']J™
+pkg.torch.onnx.stack_traceãFile "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 218, in forward
+    out = self.layer4(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 186, in forward
+    out = F.relu(self.bn1(self.conv1(x)))
+ï
+relu_15
+layer4.1.conv2.weight
+layer4.1.conv2.weight_bias
+getitem_57node_Conv_330"Conv*
+group†*
+pads@@@@†*
+kernel_shape@@†*
+strides@@†*
+auto_pad"NOTSET†*
+	dilations@@†Jà
+	namespace˙: train_master.ResNetCIFAR/layer4: torch.nn.modules.container.Sequential/layer4.1: train_master.BasicBlock/layer4.1.bn2: torch.nn.modules.batchnorm.BatchNorm2d/_native_batch_norm_legit_no_training_19: aten._native_batch_norm_legit_no_training.defaultJV
+!pkg.onnxscript.rewriter.rule_name1FuseBatchNormIntoConv, RemoveOptionalBiasFromConvJ‚
+pkg.torch.onnx.class_hierarchyø['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'torch.nn.modules.batchnorm.BatchNorm2d', 'aten._native_batch_norm_legit_no_training.default']Jæ
+pkg.torch.onnx.fx_node£%_native_batch_norm_legit_no_training_19 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv2d_19, %p_layer4_1_bn2_weight, %p_layer4_1_bn2_bias, %b_layer4_1_bn2_running_mean, %b_layer4_1_bn2_running_var, 0.1, 1e-05), kwargs = {})Js
+pkg.torch.onnx.name_scopesU['', 'layer4', 'layer4.1', 'layer4.1.bn2', '_native_batch_norm_legit_no_training_19']J¬
+pkg.torch.onnx.stack_trace£File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 218, in forward
+    out = self.layer4(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 187, in forward
+    out = self.bn2(self.conv2(out))
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/batchnorm.py", line 210, in forward
+    return F.batch_norm(
+’
+
+getitem_57
+relu_14add_402node_add_402"AddJë
+	namespaceÉ: train_master.ResNetCIFAR/layer4: torch.nn.modules.container.Sequential/layer4.1: train_master.BasicBlock/add_402: aten.add.TensorJï
+pkg.torch.onnx.class_hierarchys['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.add.Tensor']Jë
+pkg.torch.onnx.fx_nodew%add_402 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%getitem_57, %relu_14), kwargs = {})JC
+pkg.torch.onnx.name_scopes%['', 'layer4', 'layer4.1', 'add_402']Jú
+pkg.torch.onnx.stack_trace˝File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 218, in forward
+    out = self.layer4(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 188, in forward
+    out += self.shortcut(x)
+ø
+add_402relu_16node_relu_16"ReluJì
+	namespaceÖ: train_master.ResNetCIFAR/layer4: torch.nn.modules.container.Sequential/layer4.1: train_master.BasicBlock/relu_16: aten.relu.defaultJó
+pkg.torch.onnx.class_hierarchyu['train_master.ResNetCIFAR', 'torch.nn.modules.container.Sequential', 'train_master.BasicBlock', 'aten.relu.default']Já
+pkg.torch.onnx.fx_nodem%relu_16 : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%add_402,), kwargs = {})JC
+pkg.torch.onnx.name_scopes%['', 'layer4', 'layer4.1', 'relu_16']Jó
+pkg.torch.onnx.stack_trace¯File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 218, in forward
+    out = self.layer4(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259, in forward
+    input = module(input)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 189, in forward
+    return F.relu(out)
+‰
+relu_16
+val_226mean	node_mean"
+ReduceMean*
+noop_with_empty_axes †*
+keepdims†Jo
+	namespaceb: train_master.ResNetCIFAR/avgpool: torch.nn.modules.pooling.AdaptiveAvgPool2d/mean: aten.mean.dimJ}
+pkg.torch.onnx.class_hierarchy[['train_master.ResNetCIFAR', 'torch.nn.modules.pooling.AdaptiveAvgPool2d', 'aten.mean.dim']Jè
+pkg.torch.onnx.fx_nodeu%mean : [num_users=1] = call_function[target=torch.ops.aten.mean.dim](args = (%relu_16, [-1, -2], True), kwargs = {})J5
+pkg.torch.onnx.name_scopes['', 'avgpool', 'mean']JÀ
+pkg.torch.onnx.stack_trace¨File "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 219, in forward
+    out = self.avgpool(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/pooling.py", line 1514, in forward
+    return F.adaptive_avg_pool2d(input, self.output_size)
+
+mean
+val_231viewnode_Reshape_333"Reshape*
+	allowzero†J?
+	namespace2: train_master.ResNetCIFAR/view: aten.view.defaultJ<
+!pkg.onnxscript.rewriter.rule_nameMaterializeReshapeShapeJS
+pkg.torch.onnx.class_hierarchy1['train_master.ResNetCIFAR', 'aten.view.default']Jò
+pkg.torch.onnx.fx_node~%view : [num_users=1] = call_function[target=torch.ops.aten.view.default](args = (%mean, [%sym_size_int_1, 512]), kwargs = {})J*
+pkg.torch.onnx.name_scopes['', 'view']Jê
+pkg.torch.onnx.stack_tracerFile "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 220, in forward
+    out = torch.flatten(out, 1)
+Ï
+view
+	fc.weight
+fc.biasoutputnode_linear"Gemm*
+beta  Ä?†*
+transB†*
+alpha  Ä?†*
+transA †Jf
+	namespaceY: train_master.ResNetCIFAR/fc: torch.nn.modules.linear.Linear/linear: aten.linear.defaultJw
+pkg.torch.onnx.class_hierarchyU['train_master.ResNetCIFAR', 'torch.nn.modules.linear.Linear', 'aten.linear.default']Jü
+pkg.torch.onnx.fx_nodeÑ%linear : [num_users=1] = call_function[target=torch.ops.aten.linear.default](args = (%view, %p_fc_weight, %p_fc_bias), kwargs = {})J2
+pkg.torch.onnx.name_scopes['', 'fc', 'linear']Jæ
+pkg.torch.onnx.stack_traceüFile "/Users/vaidhav/Desktop/MyProjects/TWN/train_master.py", line 221, in forward
+    return self.fc(out)
+  File "/Users/vaidhav/Desktop/MyProjects/TWN/atdl/lib/python3.13/site-packages/torch/nn/modules/linear.py", line 134, in forward
+    return F.linear(input, self.weight, self.bias)
+main_graph*m@Bconv1.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset17920j
+length6912p*y@@Blayer1.0.conv1.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset209152j
+length147456p*y@@Blayer1.0.conv2.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset356608j
+length147456p*y@@Blayer1.1.conv1.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset504064j
+length147456p*y@@Blayer1.1.conv2.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset651520j
+length147456p*zÄ@Blayer2.0.conv1.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset798976j
+length294912p*|ÄÄBlayer2.0.conv2.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset1618176j
+length589824p*}Ä@Blayer2.0.shortcut.0.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset45312j
+length32768p*|ÄÄBlayer2.1.conv1.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset2208000j
+length589824p*|ÄÄBlayer2.1.conv2.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset2797824j
+length589824p*}ÄÄBlayer3.0.conv1.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset3407872j
+length1179648p*}ÄÄBlayer3.0.conv2.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset4587520j
+length2359296p*ÄÄBlayer3.0.shortcut.0.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset78080j
+length131072p*}ÄÄBlayer3.1.conv1.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset6946816j
+length2359296p*}ÄÄBlayer3.1.conv2.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset9306112j
+length2359296p*~ÄÄBlayer4.0.conv1.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset11665408j
+length4718592p*~ÄÄBlayer4.0.conv2.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset16384000j
+length9437184p*ÅÄÄBlayer4.0.shortcut.0.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset1093888j
+length524288p*~ÄÄBlayer4.1.conv1.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset25821184j
+length9437184p*~ÄÄBlayer4.1.conv2.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset35258368j
+length9437184p*h
+ÄB	fc.weightj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset24832j
+length20480p*7
+Bfc.biasJ(Aò ºFø˙º lÂ<ªBî<2"
+<w√9=öﬂˆª¡boº–†º6∞£º*Bval_226Jˇˇˇˇˇˇˇˇ˛ˇˇˇˇˇˇˇ*ö@Bconv1.weight_biasJÄ$áÿª£ía≥yî≥6=7¥ÓÏ≥⁄›¶∂æƒ∑4M>M¯⁄∑Äû≥}Ü8∏¸àú≥E{Tª˝©∂ìÃ!>c©o≥ï˝∂L„ã∑=ÿ∂≥<∑¬&:>
+Và<…ëÔ≥°zÔ≤5Ìg¥.ÖÉµI‡∂≈œÆ≥Ï§;Á	7∂∏1}≥}wÅ=q£îæ„ˆ=dõ∫ˇ≥Ëlßµ∏æ≤õ…=õY¶¥OÛò=Ü !µ;πΩŸÄ>È÷#µ#æW¥àã?˘0ªØµÏ>¸˚0>éÎçæ˙=>ŸŒ¢≥Yã>Á«->lu…≥Ωåü∂cP9=¢íµ˙/w>f+#≥àπ Ãâ≥*£@Blayer1.0.conv1.weight_biasJÄXY(>àS>x”º∑‹“= [ÕΩú≥·æ|©>4=ñ>å•j>~Hü>[Ag>,.>á‰œ=œ∫%æ/G>O¬±æﬂ»c>ﬂúx>ôo>Ωté>¡|>£:>V ì>•¢ÔΩ˚?i>8Ü≈ΩL*>>
+‚∑>r"æı >ËgN>pÓã>R(>∆ç>⁄ÁD>0\æ⁄Í=ãÆñ>27´=8FÇºKö¿æ—àæ˘Çæ8ÁænCÿæ–çÆΩ =4î%>3ï>$vØ>5˘ˆ=,%q>^æÊw©=/´À=∏{>Úwƒ=„›>dï:>¯‘è<T˜«>†ö<gÏ>îrçæ*£@Blayer1.0.conv2.weight_biasJÄ4a =Ü(8>|‚à>gIP>Ÿì<>jvP>»O∏ì>4ß?Swã∏¯«[>Á/hæ¬Mc=‘∂ºíc—ΩEO-ªM—S>ÑôsæÂ>éTxΩÍﬁi=ŒFìΩﬁ˚£Ω¶zr=¿Tú=-æ.>VÊã>(Vº=h•ΩÚ|<ùQ»>B]êΩ6K∂æ~¿>(é¬∫`%>8(∑O≤oæR»Ω÷’z>|Ñ
+>ª√mº~ßh>Jøøæ`…G=}[Ó= ˛y:∞—Ωö∞=åÆ>2<ûæ®óVæ–ØE>cæ4Ωô´Wæ k>»˘<B™ª¬=8>È$"æ"œa∏<ÀÀΩN∂.>*£@Blayer1.1.conv1.weight_biasJÄ*à©Ω∏”‹ª‡åΩ¿'|Ω¯4ãºÏGä<0EÎ<x)©<@®I;≈ÇçΩú]>≤»hΩ<ö@æl˙<ƒM‡<0íbºéfΩkêXΩ vÖ=bk©ºÒ∂=~díº†ô°º∆dΩoµ!Ω`∏…ºñÖ2æ‹Ê´<ÍﬁeæºE∆<87º` E<¬9k=ÌvLΩˆÜ=ê∆ºôçºÜ√#Ω a=2]>n¡G=úæ¡ºJh2ΩDd&º
+I#Ω<∏õ<ÿΩî=à≥nº¿ıªÙ„éΩf¢=òíﬂ<Pˆı;X‘<$xù<”E§=˜ı.>¢æ¡“TΩºíÉ<M›>Ω Æ<à¿™ºP1FΩ*£@Blayer1.1.conv2.weight_biasJÄˆiUΩáØá>ı√Læ|•ºªé˘=q!æpµî>~øòæÛµ)>[7æÀäœ<BM	?>„UΩ©$ﬁ=YÎΩAùh>¶”«=RA#=í$W=H4_>ò`†Ω|;0=">Qæcdﬂ>ê˝º◊‰=xîÒº(™≈> Wù;"õµ=tÉΩiiY=L:Ω·)Û=2Œ¬>LãÕ<>ﬂ¨æP`µ:∆öΩgÂÅ<rïZΩéu¥=Ûˆ<Dv¿<ØæL> tª &œæl&ùº ıJ< K;∫!=˛¿=p`«ºçKΩZw|ΩÄiÇªÎÛi>:‹Y<@NPªŸ¶ÚΩ;æÄè±>–6< yΩ*qÄBlayer2.0.conv1.weight_biasj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset0j
+length512p*sÄBlayer2.0.conv2.weight_biasj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset512j
+length512p*yÄBlayer2.0.shortcut.0.weight_biasj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset1024j
+length512p*tÄBlayer2.1.conv1.weight_biasj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset1536j
+length512p*tÄBlayer2.1.conv2.weight_biasj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset2048j
+length512p*uÄBlayer3.0.conv1.weight_biasj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset2560j
+length1024p*uÄBlayer3.0.conv2.weight_biasj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset3584j
+length1024p*zÄBlayer3.0.shortcut.0.weight_biasj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset4608j
+length1024p*uÄBlayer3.1.conv1.weight_biasj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset5632j
+length1024p*uÄBlayer3.1.conv2.weight_biasj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset6656j
+length1024p*uÄBlayer4.0.conv1.weight_biasj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset7680j
+length2048p*uÄBlayer4.0.conv2.weight_biasj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset9728j
+length2048p*{ÄBlayer4.0.shortcut.0.weight_biasj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset11776j
+length2048p*vÄBlayer4.1.conv1.weight_biasj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset13824j
+length2048p*vÄBlayer4.1.conv2.weight_biasj0
+location$resnet18_student_base_fp32.onnx.dataj
+offset15872j
+length2048p*Bval_231Jˇˇˇˇˇˇˇˇ       Zœ
+input 
+
+
+batch_size
+
+ 
+ "=
+/pkg.torch.export.graph_signature.InputSpec.kind
+USER_INPUT"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"&
+!pkg.torch.onnx.original_node_namexbê
+output
+
+
+batch_size
+
+"?
+0pkg.torch.export.graph_signature.OutputSpec.kindUSER_OUTPUT"+
+!pkg.torch.onnx.original_node_namelinearj&
+conv1.weight
+
+@
+
+
+j/
+layer1.0.conv1.weight
+
+@
+@
+
+j/
+layer1.0.conv2.weight
+
+@
+@
+
+j/
+layer1.1.conv1.weight
+
+@
+@
+
+j/
+layer1.1.conv2.weight
+
+@
+@
+
+j0
+layer2.0.conv1.weight
+
+Ä
+@
+
+j1
+layer2.0.conv2.weight
+
+Ä
+Ä
+
+j5
+layer2.0.shortcut.0.weight
+
+Ä
+@
+
+j1
+layer2.1.conv1.weight
+
+Ä
+Ä
+
+j1
+layer2.1.conv2.weight
+
+Ä
+Ä
+
+j1
+layer3.0.conv1.weight
+
+Ä
+Ä
+
+j1
+layer3.0.conv2.weight
+
+Ä
+Ä
+
+j6
+layer3.0.shortcut.0.weight
+
+Ä
+Ä
+
+j1
+layer3.1.conv1.weight
+
+Ä
+Ä
+
+j1
+layer3.1.conv2.weight
+
+Ä
+Ä
+
+j1
+layer4.0.conv1.weight
+
+Ä
+Ä
+
+j1
+layer4.0.conv2.weight
+
+Ä
+Ä
+
+j6
+layer4.0.shortcut.0.weight
+
+Ä
+Ä
+
+j1
+layer4.1.conv1.weight
+
+Ä
+Ä
+
+j1
+layer4.1.conv2.weight
+
+Ä
+Ä
+
+jÀ
+	fc.weight
+	
+
+
+Ä"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"0
+!pkg.torch.onnx.original_node_namep_fc_weightj¬
+fc.bias
+
+
+
+"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone".
+!pkg.torch.onnx.original_node_name	p_fc_biasjU
+val_226
+
+
+">
+$pkg.onnxscript.optimizer.folded_from['val_224', 'val_225']j
+conv1.weight_bias
+
+
+@j(
+layer1.0.conv1.weight_bias
+
+
+@j(
+layer1.0.conv2.weight_bias
+
+
+@j(
+layer1.1.conv1.weight_bias
+
+
+@j(
+layer1.1.conv2.weight_bias
+
+
+@j)
+layer2.0.conv1.weight_bias
+	
+Äj)
+layer2.0.conv2.weight_bias
+	
+Äj.
+layer2.0.shortcut.0.weight_bias
+	
+Äj)
+layer2.1.conv1.weight_bias
+	
+Äj)
+layer2.1.conv2.weight_bias
+	
+Äj)
+layer3.0.conv1.weight_bias
+	
+Äj)
+layer3.0.conv2.weight_bias
+	
+Äj.
+layer3.0.shortcut.0.weight_bias
+	
+Äj)
+layer3.1.conv1.weight_bias
+	
+Äj)
+layer3.1.conv2.weight_bias
+	
+Äj)
+layer4.0.conv1.weight_bias
+	
+Äj)
+layer4.0.conv2.weight_bias
+	
+Äj.
+layer4.0.shortcut.0.weight_bias
+	
+Äj)
+layer4.1.conv1.weight_bias
+	
+Äj)
+layer4.1.conv2.weight_bias
+	
+Äj
+val_231
+
+
+j+
+getitem 
+
+
+batch_size
+@
+ 
+ j(
+relu 
+
+
+batch_size
+@
+ 
+ j-
+	getitem_3 
+
+
+batch_size
+@
+ 
+ j*
+relu_1 
+
+
+batch_size
+@
+ 
+ j-
+	getitem_6 
+
+
+batch_size
+@
+ 
+ j*
+add_50 
+
+
+batch_size
+@
+ 
+ j*
+relu_2 
+
+
+batch_size
+@
+ 
+ j-
+	getitem_9 
+
+
+batch_size
+@
+ 
+ j*
+relu_3 
+
+
+batch_size
+@
+ 
+ j.
+
+getitem_12 
+
+
+batch_size
+@
+ 
+ j*
+add_96 
+
+
+batch_size
+@
+ 
+ j*
+relu_4 
+
+
+batch_size
+@
+ 
+ j/
+
+getitem_15!
+
+
+batch_size
+Ä
+
+j+
+relu_5!
+
+
+batch_size
+Ä
+
+j/
+
+getitem_18!
+
+
+batch_size
+Ä
+
+j/
+
+getitem_21!
+
+
+batch_size
+Ä
+
+j,
+add_152!
+
+
+batch_size
+Ä
+
+j+
+relu_6!
+
+
+batch_size
+Ä
+
+j/
+
+getitem_24!
+
+
+batch_size
+Ä
+
+j+
+relu_7!
+
+
+batch_size
+Ä
+
+j/
+
+getitem_27!
+
+
+batch_size
+Ä
+
+j,
+add_198!
+
+
+batch_size
+Ä
+
+j+
+relu_8!
+
+
+batch_size
+Ä
+
+j/
+
+getitem_30!
+
+
+batch_size
+Ä
+
+j+
+relu_9!
+
+
+batch_size
+Ä
+
+j/
+
+getitem_33!
+
+
+batch_size
+Ä
+
+j/
+
+getitem_36!
+
+
+batch_size
+Ä
+
+j,
+add_254!
+
+
+batch_size
+Ä
+
+j,
+relu_10!
+
+
+batch_size
+Ä
+
+j/
+
+getitem_39!
+
+
+batch_size
+Ä
+
+j,
+relu_11!
+
+
+batch_size
+Ä
+
+j/
+
+getitem_42!
+
+
+batch_size
+Ä
+
+j,
+add_300!
+
+
+batch_size
+Ä
+
+j,
+relu_12!
+
+
+batch_size
+Ä
+
+j/
+
+getitem_45!
+
+
+batch_size
+Ä
+
+j,
+relu_13!
+
+
+batch_size
+Ä
+
+j/
+
+getitem_48!
+
+
+batch_size
+Ä
+
+j/
+
+getitem_51!
+
+
+batch_size
+Ä
+
+j,
+add_356!
+
+
+batch_size
+Ä
+
+j,
+relu_14!
+
+
+batch_size
+Ä
+
+j/
+
+getitem_54!
+
+
+batch_size
+Ä
+
+j,
+relu_15!
+
+
+batch_size
+Ä
+
+j/
+
+getitem_57!
+
+
+batch_size
+Ä
+
+j,
+add_402!
+
+
+batch_size
+Ä
+
+j,
+relu_16!
+
+
+batch_size
+Ä
+
+j)
+mean!
+
+
+batch_size
+Ä
+
+j!
+view
+
+
+batch_size
+ÄÇúJ
+0pkg.torch.export.ExportedProgram.graph_signatureÁI
+# inputs
+p_conv1_weight: PARAMETER target='conv1.weight'
+p_bn1_weight: PARAMETER target='bn1.weight'
+p_bn1_bias: PARAMETER target='bn1.bias'
+p_layer1_0_conv1_weight: PARAMETER target='layer1.0.conv1.weight'
+p_layer1_0_bn1_weight: PARAMETER target='layer1.0.bn1.weight'
+p_layer1_0_bn1_bias: PARAMETER target='layer1.0.bn1.bias'
+p_layer1_0_conv2_weight: PARAMETER target='layer1.0.conv2.weight'
+p_layer1_0_bn2_weight: PARAMETER target='layer1.0.bn2.weight'
+p_layer1_0_bn2_bias: PARAMETER target='layer1.0.bn2.bias'
+p_layer1_1_conv1_weight: PARAMETER target='layer1.1.conv1.weight'
+p_layer1_1_bn1_weight: PARAMETER target='layer1.1.bn1.weight'
+p_layer1_1_bn1_bias: PARAMETER target='layer1.1.bn1.bias'
+p_layer1_1_conv2_weight: PARAMETER target='layer1.1.conv2.weight'
+p_layer1_1_bn2_weight: PARAMETER target='layer1.1.bn2.weight'
+p_layer1_1_bn2_bias: PARAMETER target='layer1.1.bn2.bias'
+p_layer2_0_conv1_weight: PARAMETER target='layer2.0.conv1.weight'
+p_layer2_0_bn1_weight: PARAMETER target='layer2.0.bn1.weight'
+p_layer2_0_bn1_bias: PARAMETER target='layer2.0.bn1.bias'
+p_layer2_0_conv2_weight: PARAMETER target='layer2.0.conv2.weight'
+p_layer2_0_bn2_weight: PARAMETER target='layer2.0.bn2.weight'
+p_layer2_0_bn2_bias: PARAMETER target='layer2.0.bn2.bias'
+p_layer2_0_shortcut_0_weight: PARAMETER target='layer2.0.shortcut.0.weight'
+p_layer2_0_shortcut_1_weight: PARAMETER target='layer2.0.shortcut.1.weight'
+p_layer2_0_shortcut_1_bias: PARAMETER target='layer2.0.shortcut.1.bias'
+p_layer2_1_conv1_weight: PARAMETER target='layer2.1.conv1.weight'
+p_layer2_1_bn1_weight: PARAMETER target='layer2.1.bn1.weight'
+p_layer2_1_bn1_bias: PARAMETER target='layer2.1.bn1.bias'
+p_layer2_1_conv2_weight: PARAMETER target='layer2.1.conv2.weight'
+p_layer2_1_bn2_weight: PARAMETER target='layer2.1.bn2.weight'
+p_layer2_1_bn2_bias: PARAMETER target='layer2.1.bn2.bias'
+p_layer3_0_conv1_weight: PARAMETER target='layer3.0.conv1.weight'
+p_layer3_0_bn1_weight: PARAMETER target='layer3.0.bn1.weight'
+p_layer3_0_bn1_bias: PARAMETER target='layer3.0.bn1.bias'
+p_layer3_0_conv2_weight: PARAMETER target='layer3.0.conv2.weight'
+p_layer3_0_bn2_weight: PARAMETER target='layer3.0.bn2.weight'
+p_layer3_0_bn2_bias: PARAMETER target='layer3.0.bn2.bias'
+p_layer3_0_shortcut_0_weight: PARAMETER target='layer3.0.shortcut.0.weight'
+p_layer3_0_shortcut_1_weight: PARAMETER target='layer3.0.shortcut.1.weight'
+p_layer3_0_shortcut_1_bias: PARAMETER target='layer3.0.shortcut.1.bias'
+p_layer3_1_conv1_weight: PARAMETER target='layer3.1.conv1.weight'
+p_layer3_1_bn1_weight: PARAMETER target='layer3.1.bn1.weight'
+p_layer3_1_bn1_bias: PARAMETER target='layer3.1.bn1.bias'
+p_layer3_1_conv2_weight: PARAMETER target='layer3.1.conv2.weight'
+p_layer3_1_bn2_weight: PARAMETER target='layer3.1.bn2.weight'
+p_layer3_1_bn2_bias: PARAMETER target='layer3.1.bn2.bias'
+p_layer4_0_conv1_weight: PARAMETER target='layer4.0.conv1.weight'
+p_layer4_0_bn1_weight: PARAMETER target='layer4.0.bn1.weight'
+p_layer4_0_bn1_bias: PARAMETER target='layer4.0.bn1.bias'
+p_layer4_0_conv2_weight: PARAMETER target='layer4.0.conv2.weight'
+p_layer4_0_bn2_weight: PARAMETER target='layer4.0.bn2.weight'
+p_layer4_0_bn2_bias: PARAMETER target='layer4.0.bn2.bias'
+p_layer4_0_shortcut_0_weight: PARAMETER target='layer4.0.shortcut.0.weight'
+p_layer4_0_shortcut_1_weight: PARAMETER target='layer4.0.shortcut.1.weight'
+p_layer4_0_shortcut_1_bias: PARAMETER target='layer4.0.shortcut.1.bias'
+p_layer4_1_conv1_weight: PARAMETER target='layer4.1.conv1.weight'
+p_layer4_1_bn1_weight: PARAMETER target='layer4.1.bn1.weight'
+p_layer4_1_bn1_bias: PARAMETER target='layer4.1.bn1.bias'
+p_layer4_1_conv2_weight: PARAMETER target='layer4.1.conv2.weight'
+p_layer4_1_bn2_weight: PARAMETER target='layer4.1.bn2.weight'
+p_layer4_1_bn2_bias: PARAMETER target='layer4.1.bn2.bias'
+p_fc_weight: PARAMETER target='fc.weight'
+p_fc_bias: PARAMETER target='fc.bias'
+b_bn1_running_mean: BUFFER target='bn1.running_mean' persistent=True
+b_bn1_running_var: BUFFER target='bn1.running_var' persistent=True
+b_bn1_num_batches_tracked: BUFFER target='bn1.num_batches_tracked' persistent=True
+b_layer1_0_bn1_running_mean: BUFFER target='layer1.0.bn1.running_mean' persistent=True
+b_layer1_0_bn1_running_var: BUFFER target='layer1.0.bn1.running_var' persistent=True
+b_layer1_0_bn1_num_batches_tracked: BUFFER target='layer1.0.bn1.num_batches_tracked' persistent=True
+b_layer1_0_bn2_running_mean: BUFFER target='layer1.0.bn2.running_mean' persistent=True
+b_layer1_0_bn2_running_var: BUFFER target='layer1.0.bn2.running_var' persistent=True
+b_layer1_0_bn2_num_batches_tracked: BUFFER target='layer1.0.bn2.num_batches_tracked' persistent=True
+b_layer1_1_bn1_running_mean: BUFFER target='layer1.1.bn1.running_mean' persistent=True
+b_layer1_1_bn1_running_var: BUFFER target='layer1.1.bn1.running_var' persistent=True
+b_layer1_1_bn1_num_batches_tracked: BUFFER target='layer1.1.bn1.num_batches_tracked' persistent=True
+b_layer1_1_bn2_running_mean: BUFFER target='layer1.1.bn2.running_mean' persistent=True
+b_layer1_1_bn2_running_var: BUFFER target='layer1.1.bn2.running_var' persistent=True
+b_layer1_1_bn2_num_batches_tracked: BUFFER target='layer1.1.bn2.num_batches_tracked' persistent=True
+b_layer2_0_bn1_running_mean: BUFFER target='layer2.0.bn1.running_mean' persistent=True
+b_layer2_0_bn1_running_var: BUFFER target='layer2.0.bn1.running_var' persistent=True
+b_layer2_0_bn1_num_batches_tracked: BUFFER target='layer2.0.bn1.num_batches_tracked' persistent=True
+b_layer2_0_bn2_running_mean: BUFFER target='layer2.0.bn2.running_mean' persistent=True
+b_layer2_0_bn2_running_var: BUFFER target='layer2.0.bn2.running_var' persistent=True
+b_layer2_0_bn2_num_batches_tracked: BUFFER target='layer2.0.bn2.num_batches_tracked' persistent=True
+b_layer2_0_shortcut_1_running_mean: BUFFER target='layer2.0.shortcut.1.running_mean' persistent=True
+b_layer2_0_shortcut_1_running_var: BUFFER target='layer2.0.shortcut.1.running_var' persistent=True
+b_layer2_0_shortcut_1_num_batches_tracked: BUFFER target='layer2.0.shortcut.1.num_batches_tracked' persistent=True
+b_layer2_1_bn1_running_mean: BUFFER target='layer2.1.bn1.running_mean' persistent=True
+b_layer2_1_bn1_running_var: BUFFER target='layer2.1.bn1.running_var' persistent=True
+b_layer2_1_bn1_num_batches_tracked: BUFFER target='layer2.1.bn1.num_batches_tracked' persistent=True
+b_layer2_1_bn2_running_mean: BUFFER target='layer2.1.bn2.running_mean' persistent=True
+b_layer2_1_bn2_running_var: BUFFER target='layer2.1.bn2.running_var' persistent=True
+b_layer2_1_bn2_num_batches_tracked: BUFFER target='layer2.1.bn2.num_batches_tracked' persistent=True
+b_layer3_0_bn1_running_mean: BUFFER target='layer3.0.bn1.running_mean' persistent=True
+b_layer3_0_bn1_running_var: BUFFER target='layer3.0.bn1.running_var' persistent=True
+b_layer3_0_bn1_num_batches_tracked: BUFFER target='layer3.0.bn1.num_batches_tracked' persistent=True
+b_layer3_0_bn2_running_mean: BUFFER target='layer3.0.bn2.running_mean' persistent=True
+b_layer3_0_bn2_running_var: BUFFER target='layer3.0.bn2.running_var' persistent=True
+b_layer3_0_bn2_num_batches_tracked: BUFFER target='layer3.0.bn2.num_batches_tracked' persistent=True
+b_layer3_0_shortcut_1_running_mean: BUFFER target='layer3.0.shortcut.1.running_mean' persistent=True
+b_layer3_0_shortcut_1_running_var: BUFFER target='layer3.0.shortcut.1.running_var' persistent=True
+b_layer3_0_shortcut_1_num_batches_tracked: BUFFER target='layer3.0.shortcut.1.num_batches_tracked' persistent=True
+b_layer3_1_bn1_running_mean: BUFFER target='layer3.1.bn1.running_mean' persistent=True
+b_layer3_1_bn1_running_var: BUFFER target='layer3.1.bn1.running_var' persistent=True
+b_layer3_1_bn1_num_batches_tracked: BUFFER target='layer3.1.bn1.num_batches_tracked' persistent=True
+b_layer3_1_bn2_running_mean: BUFFER target='layer3.1.bn2.running_mean' persistent=True
+b_layer3_1_bn2_running_var: BUFFER target='layer3.1.bn2.running_var' persistent=True
+b_layer3_1_bn2_num_batches_tracked: BUFFER target='layer3.1.bn2.num_batches_tracked' persistent=True
+b_layer4_0_bn1_running_mean: BUFFER target='layer4.0.bn1.running_mean' persistent=True
+b_layer4_0_bn1_running_var: BUFFER target='layer4.0.bn1.running_var' persistent=True
+b_layer4_0_bn1_num_batches_tracked: BUFFER target='layer4.0.bn1.num_batches_tracked' persistent=True
+b_layer4_0_bn2_running_mean: BUFFER target='layer4.0.bn2.running_mean' persistent=True
+b_layer4_0_bn2_running_var: BUFFER target='layer4.0.bn2.running_var' persistent=True
+b_layer4_0_bn2_num_batches_tracked: BUFFER target='layer4.0.bn2.num_batches_tracked' persistent=True
+b_layer4_0_shortcut_1_running_mean: BUFFER target='layer4.0.shortcut.1.running_mean' persistent=True
+b_layer4_0_shortcut_1_running_var: BUFFER target='layer4.0.shortcut.1.running_var' persistent=True
+b_layer4_0_shortcut_1_num_batches_tracked: BUFFER target='layer4.0.shortcut.1.num_batches_tracked' persistent=True
+b_layer4_1_bn1_running_mean: BUFFER target='layer4.1.bn1.running_mean' persistent=True
+b_layer4_1_bn1_running_var: BUFFER target='layer4.1.bn1.running_var' persistent=True
+b_layer4_1_bn1_num_batches_tracked: BUFFER target='layer4.1.bn1.num_batches_tracked' persistent=True
+b_layer4_1_bn2_running_mean: BUFFER target='layer4.1.bn2.running_mean' persistent=True
+b_layer4_1_bn2_running_var: BUFFER target='layer4.1.bn2.running_var' persistent=True
+b_layer4_1_bn2_num_batches_tracked: BUFFER target='layer4.1.bn2.num_batches_tracked' persistent=True
+x: USER_INPUT
+
+# outputs
+linear: USER_OUTPUT
+ÇJ
+2pkg.torch.export.ExportedProgram.range_constraints{s77: VR[0, int_oo]}B
+ 
