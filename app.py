@@ -173,35 +173,60 @@ def run_single_inference(session, tensor):
     
     latency_ms = ((t1 - t0) / runs) * 1000.0
     probs = softmax(logits)
-    prob_dict = {CLASS_NAMES[i]: float(probs[i]) for i in range(10)}
     top_idx = int(np.argmax(probs))
     top_class = CLASS_NAMES[top_idx]
     top_conf = float(probs[top_idx]) * 100.0
-    
-    return prob_dict, top_class, top_conf, latency_ms
+    top3 = sorted(enumerate(probs), key=lambda x: -x[1])[:3]
+
+    return top3, top_class, top_conf, latency_ms
 
 
+def make_bar_html(top3, top_class, top_conf, latency_ms, cfg):
+    """Render a styled HTML bar chart — avoids gr.Label's broken JSON schema."""
+    bars = ""
+    for idx, score in top3:
+        pct = score * 100.0
+        label = CLASS_NAMES[idx]
+        color = "#6366f1" if label == top_class else "#94a3b8"
+        bars += (
+            f'<div style="margin:4px 0;">'
+            f'<div style="display:flex;align-items:center;gap:8px;">'
+            f'<span style="width:80px;font-size:12px;color:#e2e8f0;text-align:right;">{label}</span>'
+            f'<div style="flex:1;background:#1e293b;border-radius:4px;height:18px;">'
+            f'<div style="width:{pct:.1f}%;background:{color};border-radius:4px;height:18px;"></div>'
+            f'</div>'
+            f'<span style="font-size:12px;color:#cbd5e1;min-width:42px;">{pct:.1f}%</span>'
+            f'</div></div>'
+        )
+    info = (
+        f'<div style="font-size:12px;color:#94a3b8;margin-top:8px;line-height:1.8;">'
+        f'<b style="color:#e2e8f0;">Prediction:</b> {top_class} ({top_conf:.1f}%)<br>'
+        f'<b style="color:#e2e8f0;">Latency:</b> {latency_ms:.1f} ms &nbsp;|&nbsp; '
+        f'<b style="color:#e2e8f0;">FPS:</b> {1000.0/latency_ms:.0f}<br>'
+        f'<b style="color:#e2e8f0;">Size:</b> {cfg["size_mb"]:.2f} MB ({cfg["compression"]})<br>'
+        f'<b style="color:#e2e8f0;">Sparsity:</b> {cfg["sparsity"]}&nbsp;|&nbsp;'
+        f'<b style="color:#e2e8f0;">CIFAR-10.1:</b> {cfg["unseen_acc"]}'
+        f'</div>'
+    )
+    return f'<div style="padding:8px;background:#0f172a;border-radius:8px;">{bars}{info}</div>'
+
+
+@gpu_decorator
 def predict_all_models(input_img):
     if input_img is None:
-        return [None] * 8
+        placeholder = '<div style="color:#64748b;padding:8px;">Upload an image and click Compare.</div>'
+        return [placeholder] * 4
 
     tensor = preprocess_image(input_img)
-    
+
     results = []
     for key in ["teacher", "student_base", "twn_b4", "late_b4"]:
         sess = SESSIONS[key]
         cfg = MODEL_CONFIGS[key]
-        prob_dict, top_class, top_conf, latency_ms = run_single_inference(sess, tensor)
-        
-        info_md = f"""### **{cfg['title']}**
-- **Predicted Class**: `{top_class}` ({top_conf:.1f}% confidence)
-- **Inference Latency**: `{latency_ms:.2f} ms` ({1000.0/latency_ms:.0f} FPS)
-- **Disk File Size**: `{cfg['size_mb']:.2f} MB` ({cfg['compression']})
-- **Weight Sparsity**: `{cfg['sparsity']}`
-- **Unseen CIFAR-10.1 Acc**: `{cfg['unseen_acc']}`
-"""
-        results.extend([prob_dict, info_md])
-        
+        top3, top_class, top_conf, latency_ms = run_single_inference(sess, tensor)
+        html = make_bar_html(top3, top_class, top_conf, latency_ms, cfg)
+        results.append(html)
+
     return results
 
 
@@ -266,25 +291,21 @@ with gr.Blocks(title="Ternary ResNet-18 KD & QAT Demo") as demo:
             
             with gr.Row():
                 with gr.Column(scale=1):
-                    gr.Markdown("#### 🎓 **ResNet-34 Teacher**")
-                    out_teacher_chart = gr.Label(num_top_classes=3, label="Top Probabilities")
-                    out_teacher_info = gr.Markdown("Click 'Compare All 4 Models' to run.")
-                
+                    gr.Markdown("#### 🎓 **ResNet-34 Teacher** — FP32 81.33 MB")
+                    out_teacher = gr.HTML('<div style="color:#64748b;padding:8px;">Upload an image and click Compare.</div>')
+
                 with gr.Column(scale=1):
-                    gr.Markdown("#### 📦 **ResNet-18 Student Base**")
-                    out_student_chart = gr.Label(num_top_classes=3, label="Top Probabilities")
-                    out_student_info = gr.Markdown("Click 'Compare All 4 Models' to run.")
+                    gr.Markdown("#### 📦 **ResNet-18 Student Base** — FP32 42.70 MB")
+                    out_student = gr.HTML('<div style="color:#64748b;padding:8px;">Upload an image and click Compare.</div>')
 
             with gr.Row():
                 with gr.Column(scale=1):
-                    gr.Markdown("#### ⚡ **TWN ResNet-18 (INT2)**")
-                    out_twn_chart = gr.Label(num_top_classes=3, label="Top Probabilities")
-                    out_twn_info = gr.Markdown("Click 'Compare All 4 Models' to run.")
+                    gr.Markdown("#### ⚡ **TWN ResNet-18 B4** — INT2 2.80 MB (15.3× smaller)")
+                    out_twn = gr.HTML('<div style="color:#64748b;padding:8px;">Upload an image and click Compare.</div>')
 
                 with gr.Column(scale=1):
-                    gr.Markdown("#### 🎯 **LATe ResNet-18 (INT2)**")
-                    out_late_chart = gr.Label(num_top_classes=3, label="Top Probabilities")
-                    out_late_info = gr.Markdown("Click 'Compare All 4 Models' to run.")
+                    gr.Markdown("#### 🎯 **LATe ResNet-18 B4** — INT2 2.80 MB (66.85% sparse)")
+                    out_late = gr.HTML('<div style="color:#64748b;padding:8px;">Upload an image and click Compare.</div>')
 
     # Educational Technical Summary
     with gr.Accordion("📖 Key Technical Findings & Architecture Summary", open=False):
@@ -302,18 +323,16 @@ with gr.Blocks(title="Ternary ResNet-18 KD & QAT Demo") as demo:
 3. **Multiplication-Free Inference**: Non-zero weights $\{-\alpha, +\alpha\}$ replace FP32 multiplications with simple additions/subtractions, while $52\%$ to $66.85\%$ of operations are completely bypassed via zero-skipping.
 """)
 
-    # Event binding
-    outputs_list = [
-        out_teacher_chart, out_teacher_info,
-        out_student_chart, out_student_info,
-        out_twn_chart, out_twn_info,
-        out_late_chart, out_late_info
-    ]
+    # Event binding — 4 HTML outputs, no gr.Label (avoids JSON schema bool bug)
+    outputs_list = [out_teacher, out_student, out_twn, out_late]
 
     btn_run.click(fn=predict_all_models, inputs=[img_input], outputs=outputs_list)
     img_input.change(fn=predict_all_models, inputs=[img_input], outputs=outputs_list)
 
 
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=7860)
-
+    demo.launch(
+        server_name="0.0.0.0",
+        server_port=7860,
+        show_error=True,
+    )
